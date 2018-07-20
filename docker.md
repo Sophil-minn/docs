@@ -1,3 +1,7 @@
+
+#### docker 操作
+
+```
 docker exec -it gitlab cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
 docker exec -it gitlab-runner gitlab-runner register
 
@@ -77,7 +81,4 @@ Runner registered successfully. Feel free to start it, but if it's running alrea
 7、sudo gitlab-runner verify --delete，删除注册的用户，如果想要从头再来
 8、删除 ~/.gitlab-runner/config.toml(注册的用户的配置文件)，和/etc/gitlab-runner/config.toml，如果想要从头再来
 
-作者：Jafir
-链接：https://www.jianshu.com/p/a67270d91fbd
-來源：简书
-简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+```
