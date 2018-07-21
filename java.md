@@ -41,14 +41,148 @@ Sprint 中 注解
 2.4 @component 实例化到 spring 容器中，相当于 bean class
 ```
 
-#### 2、API Doc文档
+#### 2、[API Doc文档](http://blog.didispace.com/springbootswagger2/)
 ```
-Swagger
-1、/v2/api-docs  生成的 json 文件
-2、/swagger-ui.html 查看 api 文档
+1、pom.xml
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.2.2</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.2.2</version>
+</dependency>
+
+2、config
+@Configuration
+@EnableSwagger2
+public class Swagger2 {
+
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.didispace.web"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Spring Boot中使用Swagger2构建RESTful APIs")
+                .description("更多Spring Boot相关文章请关注：http://blog.didispace.com/")
+                .termsOfServiceUrl("http://blog.didispace.com/")
+                .contact("程序猿DD")
+                .version("1.0")
+                .build();
+    }
+
+}
+
+3、api Swagger
+3.1、/v2/api-docs  生成的 json 文件
+3.2、/swagger-ui.html 查看 api 文档
 ```
 
 #### 3、（注释||代码） 模版
 ```
 
 ```
+
+#### 4、Email
+```
+<!-- Email -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+
+
+spring.mail.host=xxxxx.xxxx
+spring.mail.username=用户名
+spring.mail.password=密码
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+```
+
+#### 5、Log
+```
+1、引入依赖
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-log4j</artifactId>
+</dependency>
+   
+
+2、LOG4J配置
+log4j.rootLogger=info,ServerDailyRollingFile,stdout
+log4j.appender.ServerDailyRollingFile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.ServerDailyRollingFile.DatePattern='.'yyyy-MM-dd
+log4j.appender.ServerDailyRollingFile.File=logs/test.log
+log4j.appender.ServerDailyRollingFile.layout=org.apache.log4j.PatternLayout
+log4j.appender.ServerDailyRollingFile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p [%c] - %m%n
+log4j.appender.ServerDailyRollingFile.Append=true
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d yyyy-MM-dd HH:mm:ss %p [%c] %m%n
+
+3、使用
+static final Logger logger = LogManager.getLogger(HelloController.class.getName());
+
+
+```
+
+#### 6、热部署
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+</dependency>
+
+其它部分设置
+```
+
+#### 7、多环境切换
+```
+在 src/main/resources 目录下创建三个配置文件:
+    application-dev.properties：用于开发环境
+    application-test.properties：用于测试环境
+    application-prod.properties：用于生产环境
+
+在 application.properties 中配置：
+    spring.profiles.active=dev
+```
+
+#### 8、定时任务
+```
+1、Spring Boot 的主类中加入 @EnableScheduling 注解，启用定时任务的配置
+2、@Component 放在 任务类中 注解
+3、@Scheduled(cron = "*/6 * * * * ?") 任务类中的方法中
+```
+
+#### 9、映射
+```
+@RequestParam
+@ResponseBody
+
+@RequestMapping
+@GetMapping
+@PostMapping
+@PutMapping
+@DeleteMapping
+@PatchMapping
+
+@RestController==@ResponseBody ＋ @Controller合在一起的作用
+
+HttpServletRequest request
+HttpServletResponse response
+```
+
+
+
+[文档链接](https://blog.csdn.net/haiyang4988/article/details/79082783/)
