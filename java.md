@@ -111,10 +111,27 @@ spring.mail.properties.mail.smtp.starttls.required=true
 
 #### 5、Log
 ```
+根据不同的日志系统，你可以按如下规则组织配置文件名，就能被正确加载：
+Logback(Default)：logback-spring.xml, logback-spring.groovy, logback.xml, logback.groovy
+Log4j：log4j-spring.properties, log4j-spring.xml, log4j.properties, log4j.xml
+Log4j2：log4j2-spring.xml, log4j2.xml
+JDK (Java Util Logging)：logging.properties
+
+eg. log4j
 1、引入依赖
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-log4j</artifactId>
+<dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-web</artifactId>  
+    <exclusions><!-- 去掉默认配置 -->  
+        <exclusion>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-logging</artifactId>  
+        </exclusion>  
+    </exclusions>  
+</dependency>  
+<dependency> <!-- 引入log4j2依赖 -->  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-log4j2</artifactId>  
 </dependency>
    
 
@@ -181,6 +198,67 @@ static final Logger logger = LogManager.getLogger(HelloController.class.getName(
 
 HttpServletRequest request
 HttpServletResponse response
+```
+
+#### 10、JSP
+```
+1、properties
+# 要想让spring-boot支持JSP，需要将项目打成war包。
+# 我们做最后一点修改，修改pom.xml文件，将 jar 中的 jar 修改为 war
+# 页面默认前缀目录
+    spring.mvc.view.prefix=/WEB-INF/jsp/
+    # 响应页面默认后缀
+    spring.mvc.view.suffix=.jsp
+    #关闭默认模板引擎
+    spring.thymeleaf.cache=false
+    spring.thymeleaf.enabled=false
+    # 自定义属性，可以在Controller中读取
+    application.hello=Hello Shanhy
+
+2、pom.xml 添加依赖
+<exclusion>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+</exclusion>
+
+<!--加入对jsp支持-->
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+<!--加入对servlet支持-->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+</dependency>
+<!--加入对jstl支持-->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+</dependency>
+<!-- tomcat 的支持. -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+    <scope>provided</scope>
+</dependency>
+
+3、添加页面
+项目名/src/main/webapp/WEB-INF/jsp
+
+4、添加页面路由
+
+
+```
+
+#### 11、websocket
+```
+
+```
+
+#### 12、过滤器 & 拦截器
+```
+
 ```
 
 
