@@ -30,6 +30,12 @@ Spring Boot的主要特点：
 1、IntelliJ IDEA  自带 Spring
 ```
 
+#### 0、配置文件格式
+```
+1、yml 文件
+2、properties 文件
+```
+
 #### 1、开发
 ```
 Sprint 中 注解
@@ -258,6 +264,24 @@ HttpServletResponse response
 
 #### 12、过滤器 & 拦截器
 ```
+
+```
+
+#### 13、 静态动态页面
+```
+静态页面：static, 默认
+动态页面：thymeleaf，需要引入pom.xml 依赖
+<dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+</dependency>
+
+1、静态页面 默认跳转 static
+2、pom.xml 中引入 thymeleaf 组件，默认跳转 templates
+3、从 templates 跳转 static，使用 return "redirect：hello.html"
+4、@RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用
+5、@Controller 注解可以返回jsp页面，或者html
+6、@ResponseBody 注解可以返回 
 
 ```
 
