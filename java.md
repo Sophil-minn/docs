@@ -25,6 +25,16 @@ Spring Boot的主要特点：
 
 ```
 
+### Spring Boot [注解](https://www.cnblogs.com/tanwei81/p/6814022.html)
+```
+@EnableScheduling
+@EnableCaching
+@EnableMBeanExport
+@EnableAutoConfiguration
+
+
+```
+
 ### IntelliJ IDEA（JAVA 开发工具）
 ```
 1、IntelliJ IDEA  自带 Spring
@@ -161,13 +171,29 @@ static final Logger logger = LogManager.getLogger(HelloController.class.getName(
 
 #### 6、热部署
 ```
+1、加 maven 依赖
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-devtools</artifactId>
     <optional>true</optional>
 </dependency>
 
-其它部分设置
+2、开启热部署
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <fork>true</fork>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
+3、IDEA 自动编译
+CTRL + SHIFT + A –> 查找 make project automatically –> 选中
+CTRL + SHIFT + A –> 查找 Registry –> 找到并勾选 compiler.automake.allow.when.app.running
 ```
 
 #### 7、多环境切换
@@ -286,5 +312,11 @@ HttpServletResponse response
 ```
 
 
+#### [maven 打包](https://yq.aliyun.com/articles/508421)
+```
+Run > Edit Configurations > + > maven > spring-boot:run
+```
+
 
 [文档链接](https://blog.csdn.net/haiyang4988/article/details/79082783/)
+[Spring Boot基础教程](https://github.com/dyc87112/SpringBoot-Learning)
