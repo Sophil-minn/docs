@@ -320,3 +320,5 @@ Run > Edit Configurations > + > maven > spring-boot:run
 
 [文档链接](https://blog.csdn.net/haiyang4988/article/details/79082783/)
 [Spring Boot基础教程](https://github.com/dyc87112/SpringBoot-Learning)
+[Spring Boot的启动器Starter详解](https://blog.csdn.net/chszs/article/details/50610474)
+[Spring Boot中Starter是什么](https://www.cnblogs.com/EasonJim/p/7615801.html)
