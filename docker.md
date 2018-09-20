@@ -1,6 +1,81 @@
 
 #### docker 操作
 
+- docker 安装
+```
+Mac:
+
+Linux:
+
+Win:
+
+```
+
+- docker 配置
+```
+1、加速器
+
+2、
+
+
+```
+
+- docker 基本操作
+```
+1、dokcer 镜像
+docker images
+docker search
+docker pull
+docker rmi
+
+2、docker 容器
+docker run 
+docker start
+docker stop
+docker rm
+
+3、docker
+docker exec -it [docker container name] /bin/bash
+```
+
+### gitlab Docker
+
+- gitlab 安装
+```
+1、
+docker pull gitlab/gitlab-ce
+2、
+docker pull gitlab/gitlab-runner
+```
+
+- gitlab 配置
+```
+1、
+docker run -d  -h localhost  -p 443:443 -p 80:80 -p 22:22  --name gitlab --restart always gitlab/gitlab-ce:latest
+2、
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock --link gitlab --name gitlab-runner --restart always  gitlab/gitlab-runner:latest
+3、
+docker exec -it gitlab-runner gitlab-runner register
+```
+
+- gitlab 配置中常遇到的 问题
+```
+1、gitlab-ce 配置 -h
+
+
+2、gitlab-runner 配置 --link[*]
+
+不加 --link 时，报错：
+ERROR: Registering runner... failed                 runner=Jq6omeRE status=couldn't execute POST against http://localhost/api/v4/runners: Post http://localhost/api/v4/runners: dial tcp [::1]:80: getsockopt: connection refused
+PANIC: Failed to register this runner. Perhaps you are having network problems 
+
+3、gitlab-runner 配置 docker.sock[？]
+```
+
+
+
+
+- 历史记录
 ```
 docker exec -it gitlab cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
 docker exec -it gitlab-runner gitlab-runner register
