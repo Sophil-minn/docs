@@ -56,6 +56,11 @@ docker run -d  -h localhost  -p 443:443 -p 80:80 -p 22:22  --name gitlab --resta
 docker run -d -v /var/run/docker.sock:/var/run/docker.sock --link gitlab --name gitlab-runner --restart always  gitlab/gitlab-runner:latest
 3、
 docker exec -it gitlab-runner gitlab-runner register
+4、
+按照提示输入即可，前两项可以在指定项目设置中CI/CD选项里的Runners settings选项中的Specific Runners里看到，
+tags是gitlab-ci.yml文件中所要用到的，executor我们输入docker
+
+配置成功后，我们可以在设置中CI/CD选项里的Runners settings选项中的Specific Runners里看到runner信息 
 ```
 
 - gitlab 配置中常遇到的 问题
@@ -70,6 +75,32 @@ ERROR: Registering runner... failed                 runner=Jq6omeRE status=could
 PANIC: Failed to register this runner. Perhaps you are having network problems 
 
 3、gitlab-runner 配置 docker.sock[？]
+
+4、提交了代码没有触发，一直停留在pending
+报错：This job is stuck, because you don't have any active runners that can run this job.
+
+Can run untagged jobs: [false/true]: 
+
+默认值为false。这句话的意思是：是否在没有标记tag的job上运行，如果选择默认值false，那没有标记tag的代码提交是不会触发gitlab runner的，如果做测试，最好填true。
+
+解决：在运行如 gitlab-runner 中， 设置为 untagged
+
+5、运行 runner 时，报错：
+fatal: unable to access 'http://gitlab-ci-token:xxxxxxxxxxxxxxxxxxxx@localhost/root/html5.git/': Failed to connect to localhost port 80: Connection refused
+
+解决：docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
+修改Runner的/etc/gitlab-runner/config.toml文件，在其中的[runner.docker]下增加：
+extra_hosts = ["localhost:172.17.0.1"]
+
+
+6、
+Using Docker executor with image node ...
+ERROR: Preparation failed: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? (executor_docker.go:1148:0s)
+
+解决：
+Using Docker executor with image ruby ...
+Pulling docker image ruby ...
+
 ```
 
 
