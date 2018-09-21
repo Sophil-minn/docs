@@ -110,7 +110,6 @@ Using Docker executor with image ruby ...
 Pulling docker image ruby ...
 
 ```
-
 - gitlab API 文档
 ```
 http://localhost/help/api/README.md
@@ -118,6 +117,39 @@ http://localhost/help/api/runners.md
 
 curl --header "Authorization: Bearer Lbv4J_zastGs62zvejAR" http://localhost/api/v4/projects
 ```
+
+- .gitlab-ci.yml
+```
+Image：https://docs.gitlab.com/ce/ci/docker/using_docker_images.html
+1、
+You can simply define an image that will be used for all jobs and a list of services that you want to use during build time.
+2、
+It is also possible to define different images and services per job
+
+3、
+When configuring the image or services entries, you can use a string or a map as options:
+
+when using a string as an option, it must be the full name of the image to use (including the Registry part if you want to download the image from a Registry other than Docker Hub)
+when using a map as an option, then it must contain at least the name option, which is the same name of the image as used for the string setting
+4、
+Starting multiple services from the same image
+5、
+Define image and services in config.toml
+6、
+Below is a high level overview of the steps performed by Docker during job time.
+
+Create any service container.
+Create cache container to store all volumes as defined in config.toml and Dockerfile of build image (ruby:2.1 as in above example).
+Create build container and link any service container to build container.
+Start build container and send job script to the container.
+Run job script.
+Checkout code in: /builds/group-name/project-name/.
+Run any step defined in .gitlab-ci.yml.
+Check exit status of build script.
+Remove build container and all created service containers
+
+```
+
 
 - [gitlab.yml](http://livedig.com/724)
 ```
