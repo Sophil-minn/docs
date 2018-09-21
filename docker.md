@@ -1,5 +1,6 @@
 
 #### docker 操作
+> 常用的8个Docker的真实使用场景，分别是简化配置、代码流水线管理、提高开发效率、隔离应用、整合服务器、调试能力、多租户环境、快速部署
 
 - docker 安装
 ```
@@ -61,10 +62,13 @@ docker run -d -v /var/run/docker.sock:/var/run/docker.sock --link gitlab --name 
 3、
 docker exec -it gitlab-runner gitlab-runner register
 4、
-按照提示输入即可，前两项可以在指定项目设置中CI/CD选项里的Runners settings选项中的Specific Runners里看到，
-tags是gitlab-ci.yml文件中所要用到的，executor我们输入docker
+有两种runner，
+一种是shared runner，可供全局使用，使用 admin/runner 上的token
+一种是specific runner，为项目专用。使用 项目设置中CI/CD选项 的token
 
-配置成功后，我们可以在设置中CI/CD选项里的Runners settings选项中的Specific Runners里看到runner信息 
+tags是gitlab-ci.yml文件中所要用到的，
+executor我们输入docker
+
 ```
 
 - gitlab 配置中常遇到的 问题
@@ -107,7 +111,29 @@ Pulling docker image ruby ...
 
 ```
 
+- [gitlab.yml](http://livedig.com/724)
+```
+image 关键字
 
+image 关键字是本地 Docker Engine 中存在的 Docker 镜像的名称（docker image 可列出所有docker 镜像）
+
+可在 Docker Hub (https://hub.docker.com/u/library/) 中找到的任何镜像
+
+1、前缀 library, 后缀 latest 可以省落
+image: ruby
+image: library/ruby:latest
+```
+
+- [dind](https://www.colabug.com/3806452.html)
+```
+Docker In Docker 简称 dind，在 GitLab CI 的使用中，可能会常被用于 service 的部分。 dind 表示在 Docker 中实际运行了一个 Docker 容器, 或 Docker daemon。
+
+其实如果只是在 Docker 中执行 docker 命令， 那装个二进制文件即可。 但是如果想要运行 Docker daemon (比如需要执行 docker info)或者访问任意的设备都是不允许的。
+
+Docker 在 run 命令中提供了两个很重要的选项 --privileged 和 --device ， 另外的选项比如 --cap-add 和 --cap-drop 跟权限也很相关，不过不是今天的重点，按下不表。
+
+--device 选项可以供我们在不使用 --privileged 选项时，访问到指定设备, 比如 docker run --device=/dev/sda:/dev/xvdc --rm -it ubuntu fdisk /dev/xvdc 但是这也只是有限的权限， 我们知道 docker 的技术实现其实是基于 cgroup 的资源隔离，而 --device 却不足于让我们在容器内有足够的权限来完成 docker daemon 的启动。
+```
 
 
 - 历史记录
