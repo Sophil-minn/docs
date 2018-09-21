@@ -92,9 +92,13 @@ Can run untagged jobs: [false/true]:
 5、运行 runner 时，报错：
 fatal: unable to access 'http://gitlab-ci-token:xxxxxxxxxxxxxxxxxxxx@localhost/root/html5.git/': Failed to connect to localhost port 80: Connection refused
 
-解决：docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
-修改Runner的/etc/gitlab-runner/config.toml文件，在其中的[runner.docker]下增加：
-extra_hosts = ["localhost:172.17.0.1"]
+解决：
+    5.1、
+    docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
+    5.2、
+    修改Runner的/etc/gitlab-runner/config.toml文件，
+    在其中的[runner.docker]下增加：
+    extra_hosts = ["localhost:192.168.8.108"]
 
 
 6、
@@ -105,6 +109,14 @@ ERROR: Preparation failed: Cannot connect to the Docker daemon at unix:///var/ru
 Using Docker executor with image ruby ...
 Pulling docker image ruby ...
 
+```
+
+- gitlab API 文档
+```
+http://localhost/help/api/README.md
+http://localhost/help/api/runners.md
+
+curl --header "Authorization: Bearer Lbv4J_zastGs62zvejAR" http://localhost/api/v4/projects
 ```
 
 - [gitlab.yml](http://livedig.com/724)
