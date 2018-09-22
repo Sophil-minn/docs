@@ -227,24 +227,20 @@ Docker 在 run 命令中提供了两个很重要的选项 --privileged 和 --dev
 
 --device 选项可以供我们在不使用 --privileged 选项时，访问到指定设备, 比如 docker run --device=/dev/sda:/dev/xvdc --rm -it ubuntu fdisk /dev/xvdc 但是这也只是有限的权限， 我们知道 docker 的技术实现其实是基于 cgroup 的资源隔离，而 --device 却不足于让我们在容器内有足够的权限来完成 docker daemon 的启动。
 ```
+- 其他一些思考
+```
+什么情况下需要注册Shared Runner？
+比如，GitLab上面所有的工程都有可能需要在公司的服务器上进行编译、测试、部署等工作，这个时候注册一个Shared Runner供所有工程使用就很合适。
 
+什么情况下需要注册Specific Runner？
+比如，我可能需要在我个人的电脑或者服务器上自动构建我参与的某个工程，这个时候注册一个Specific Runner就很合适。
+
+什么情况下需要在同一台机器上注册多个Runner？
+比如，我是GitLab的普通用户，没有管理员权限，我同时参与多个项目，那我就需要为我的所有项目都注册一个Specific Runner，这个时候就需要在同一台机器上注册多个Runner。
+```
 
 - 历史记录
 ```
-docker exec -it gitlab cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
-docker exec -it gitlab-runner gitlab-runner register
-
-
-# 挂载宿主机的 sock
-docker run -d --name gitlab-runner --restart always  -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock --link gitlab gitlab/gitlab-runner:latest
-docker run -d --name gitlab-runner --restart always  -v /var/run/docker.sock:/var/run/docker.sock --link gitlab gitlab/gitlab-runner:latest
-curl --header "PRIVATE-TOKEN: 9koXpg98eAheJpvBs5tK" "http://localhost/api/v4/runners"
-docker run -d  -h localhost  -p 443:443 -p 80:80 -p 22:22  --name gitlab --restart always gitlab/gitlab-ce:latest
-docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
-
-which docker:
-/usr/local/bin/docker
-
 usermod -a -G root gitlab-runner
 usermod -a -G group1 user1 添加用户user1到组group1里
 
@@ -255,14 +251,6 @@ volumes = [“/var/run/docker.sock:/var/run/docker.sock”, “/cache”]
 这样在容器中装载/var/run/docker.sock，使得构建的容器保存在主机本身的镜像存储中。这是一个比Docker更好的方法。
 
 config.toml的修改是由Runner自动执行的，因此无需重新启动。
-
-
-ERROR:
-fatal: unable to access 'http://gitlab-ci-token:xxxxxxxxxxxxxxxxxxxx@localho
-docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
-修改Runner的/etc/gitlab-runner/config.toml文件，在其中的[runner.docker]下增加：
-extra_hosts = ["localhost:172.17.0.1"]
-
 
 ERROR:
 docker exec -it gitlab-ci-multi-runner bash
