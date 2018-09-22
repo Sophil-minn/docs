@@ -227,6 +227,56 @@ Docker 在 run 命令中提供了两个很重要的选项 --privileged 和 --dev
 
 --device 选项可以供我们在不使用 --privileged 选项时，访问到指定设备, 比如 docker run --device=/dev/sda:/dev/xvdc --rm -it ubuntu fdisk /dev/xvdc 但是这也只是有限的权限， 我们知道 docker 的技术实现其实是基于 cgroup 的资源隔离，而 --device 却不足于让我们在容器内有足够的权限来完成 docker daemon 的启动。
 ```
+
+- gitlab webhook
+```
+1、本地测试 webhook
+管理员 设置(settting) ==》 外发请求(Outboound requests) ==》 Allow requests to the local network from hooks and services
+2、webhook url 设置 ip 形式，而非 localhost
+
+3、常用库
+npm install --save node-gitlab-webhook
+
+::
+var http = require('http')
+var createHandler = require('node-gitlab-webhook')
+var handler = createHandler([ // multiple handlers
+  { path: '/webhook1', secret: 'secret1' },
+  { path: '/webhook2', secret: 'secret2' }
+])
+// var handler = createHandler({ path: '/webhook1', secret: 'secret1' }) // single handler
+
+http.createServer(function (req, res) {
+  handler(req, res, function (err) {
+    res.statusCode = 404
+    res.end('no such location')
+  })
+}).listen(7777)
+
+handler.on('error', function (err) {
+  console.error('Error:', err.message)
+})
+
+handler.on('push', function (event) {
+  console.log(
+    'Received a push event for %s to %s',
+    event.payload.repository.name,
+    event.payload.ref
+  )
+  switch (event.path) {
+    case '/webhook1':
+      // do sth about webhook1
+      break
+    case '/webhook2':
+      // do sth about webhook2
+      break
+    default:
+      // do sth else or nothing
+      break
+  }
+})
+```
+
 - 其他一些思考
 ```
 什么情况下需要注册Shared Runner？
