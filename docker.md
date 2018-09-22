@@ -105,9 +105,26 @@ fatal: unable to access 'http://gitlab-ci-token:xxxxxxxxxxxxxxxxxxxx@localhost/r
 Using Docker executor with image node ...
 ERROR: Preparation failed: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? (executor_docker.go:1148:0s)
 
+分析：docker 此时已确定Docker本身已经安装正常,问题是因为docker服务没有启动, 需要 dind
+
 解决：
-Using Docker executor with image ruby ...
-Pulling docker image ruby ...
+6.1、
+docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
+6.2、
+修改Runner的/etc/gitlab-runner/config.toml文件，
+在其中的[runner.docker]下修改：
+privileged = true
+::
+The security implications of exposing docker.sock and enabling --privileged are the same.
+Experimentally we enabled --privileged mode for all builds.
+6.3、
+在 .gitlab-ci.yml中添加：
+# docker image 不添加时， docker: command not found
+image: docker:latest
+# dind service 不添加时，Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+services:
+  - docker:dind
+
 
 ```
 - gitlab API 文档
@@ -136,7 +153,18 @@ Starting multiple services from the same image
 5、
 Define image and services in config.toml
 6、
-Below is a high level overview of the steps performed by Docker during job time.
+cache
+
+Gitlab Runner v0.7.0 开始引入。
+
+cache用来指定需要在job之间缓存的文件或目录。只能使用该项目工作空间内的路径。
+
+从GitLab 9.0开始，pipelines和job就默认开启了缓存
+
+如果cache定义在jobs的作用域之外，那么它就是全局缓存，所有jobs都可以使用该缓存。
+
+6、
+Below、 is a high level overview of the steps performed by Docker during job time.
 
 Create any service container.
 Create cache container to store all volumes as defined in config.toml and Dockerfile of build image (ruby:2.1 as in above example).
@@ -150,8 +178,33 @@ Remove build container and all created service containers
 
 ```
 
+- .gitlab-ci.yml DEMO
+```
+stages:
+  - step1
+  - step2
+  - step3
 
-- [gitlab.yml](http://livedig.com/724)
+job1:
+  stage: step1
+  script:
+    - echo 'start...'
+
+job2:
+  stage: step2
+  script:
+    - id -
+    - whoami
+    - uname -a
+    - pwd
+
+job3:
+  stage: step3
+  script:
+    - cd /bin && ls -l
+```
+
+- [gitlab-ci.yml](http://livedig.com/724)
 ```
 image 关键字
 
