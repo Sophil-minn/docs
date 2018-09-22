@@ -132,7 +132,7 @@ services:
 http://localhost/help/api/README.md
 http://localhost/help/api/runners.md
 
-curl --header "Authorization: Bearer Lbv4J_zastGs62zvejAR" http://localhost/api/v4/projects
+https://docs.gitlab.com/ee/user/project/integrations/webhooks.html
 ```
 
 - .gitlab-ci.yml
