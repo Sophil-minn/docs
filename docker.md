@@ -30,13 +30,27 @@ docker pull
 docker rmi
 
 2、docker 容器
+2.1、容器运行
 docker run 
 docker start
 docker stop
 docker rm
 
-3、docker
+2.2、容器创建
+docker login [image domain]
+docker tag [image_id] [image remote url]:[version]  
+docker push [image remote url]:[version]
+
+3、进入 docker 容器
+3.1、
 docker exec -it [docker container name] /bin/bash
+# -t 分配一个伪终端
+# -i 即使没有附件也保持Stdin打开
+# -d 分离模式，后台运行
+3.2、
+docker attach container_id
+4、用户相关
+
 ```
 
 ### gitlab Docker
@@ -114,6 +128,8 @@ docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
 修改Runner的/etc/gitlab-runner/config.toml文件，
 在其中的[runner.docker]下修改：
 privileged = true
+或者
+在 docker run 运行时添加 --privileged 参数 和 -d docker:dind
 ::
 The security implications of exposing docker.sock and enabling --privileged are the same.
 Experimentally we enabled --privileged mode for all builds.
@@ -226,6 +242,26 @@ Docker In Docker 简称 dind，在 GitLab CI 的使用中，可能会常被用�
 Docker 在 run 命令中提供了两个很重要的选项 --privileged 和 --device ， 另外的选项比如 --cap-add 和 --cap-drop 跟权限也很相关，不过不是今天的重点，按下不表。
 
 --device 选项可以供我们在不使用 --privileged 选项时，访问到指定设备, 比如 docker run --device=/dev/sda:/dev/xvdc --rm -it ubuntu fdisk /dev/xvdc 但是这也只是有限的权限， 我们知道 docker 的技术实现其实是基于 cgroup 的资源隔离，而 --device 却不足于让我们在容器内有足够的权限来完成 docker daemon 的启动。
+```
+
+- .gitlab-ci.yml 问题
+```
+gitlab-ci 中 脚本可使用的命令
+一、git 在以下情况可用： 
+1、未设置 image 
+2、设置 image: node | ruby ...
+
+二、git 在以下情况不可用：
+1、image: docker
+
+三、git clone  git://username:password@gitlab.example.com/xxx.git 可以把用户名和密码带着
+
+四、docker 命令可用
+image: docker
+service: docker:dind
+
+
+
 ```
 
 - gitlab webhook
