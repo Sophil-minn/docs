@@ -30,17 +30,34 @@ docker pull
 docker rmi
 
 2、docker 容器
+2.1、容器运行
 docker run 
 docker start
 docker stop
 docker rm
 
-3、docker 网络
+2.2、容器创建
+docker login [image domain]
+docker tag [image_id] [image remote url]:[version]  
+docker push [image remote url]:[version]
 
-
-
-4、其他
+3、进入 docker 容器
+3.1、
 docker exec -it [docker container name] /bin/bash
+# -t 分配一个伪终端
+# -i 即使没有附件也保持Stdin打开
+# -d 分离模式，后台运行
+3.2、
+docker attach container_id
+4、用户相关
+
+宿主机 与 容器 交互
+1、docker cp [from ] [to]
+1.1 
+docker cp container_ID:path  path
+1.2
+docker cp path container_ID:path
+
 ```
 
 ### gitlab Docker
@@ -96,22 +113,121 @@ Can run untagged jobs: [false/true]:
 5、运行 runner 时，报错：
 fatal: unable to access 'http://gitlab-ci-token:xxxxxxxxxxxxxxxxxxxx@localhost/root/html5.git/': Failed to connect to localhost port 80: Connection refused
 
-解决：docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
-修改Runner的/etc/gitlab-runner/config.toml文件，在其中的[runner.docker]下增加：
-extra_hosts = ["localhost:172.17.0.1"]
+解决：
+    5.1、
+    docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
+    5.2、
+    修改Runner的/etc/gitlab-runner/config.toml文件，
+    在其中的[runner.docker]下增加：
+    extra_hosts = ["localhost:192.168.8.108"]
 
 
 6、
 Using Docker executor with image node ...
 ERROR: Preparation failed: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? (executor_docker.go:1148:0s)
 
+分析：docker 此时已确定Docker本身已经安装正常,问题是因为docker服务没有启动, 需要 dind
+
 解决：
-Using Docker executor with image ruby ...
-Pulling docker image ruby ...
+6.1、
+docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
+6.2、
+修改Runner的/etc/gitlab-runner/config.toml文件，
+在其中的[runner.docker]下修改：
+privileged = true
+或者
+在 docker run 运行时添加 --privileged 参数 和 -d docker:dind
+::
+The security implications of exposing docker.sock and enabling --privileged are the same.
+Experimentally we enabled --privileged mode for all builds.
+6.3、
+在 .gitlab-ci.yml中添加：
+# docker image 不添加时， docker: command not found
+image: docker:latest
+# dind service 不添加时，Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+services:
+  - docker:dind
+
+
+```
+- gitlab API 文档
+```
+http://localhost/help/api/README.md
+http://localhost/help/api/runners.md
+
+https://docs.gitlab.com/ee/user/project/integrations/webhooks.html
+```
+
+- .gitlab-ci.yml
+```
+Image：https://docs.gitlab.com/ce/ci/docker/using_docker_images.html
+1、
+You can simply define an image that will be used for all jobs and a list of services that you want to use during build time.
+2、
+It is also possible to define different images and services per job
+
+3、
+When configuring the image or services entries, you can use a string or a map as options:
+
+when using a string as an option, it must be the full name of the image to use (including the Registry part if you want to download the image from a Registry other than Docker Hub)
+when using a map as an option, then it must contain at least the name option, which is the same name of the image as used for the string setting
+4、
+Starting multiple services from the same image
+5、
+Define image and services in config.toml
+6、
+cache
+
+Gitlab Runner v0.7.0 开始引入。
+
+cache用来指定需要在job之间缓存的文件或目录。只能使用该项目工作空间内的路径。
+
+从GitLab 9.0开始，pipelines和job就默认开启了缓存
+
+如果cache定义在jobs的作用域之外，那么它就是全局缓存，所有jobs都可以使用该缓存。
+
+6、
+Below、 is a high level overview of the steps performed by Docker during job time.
+
+Create any service container.
+Create cache container to store all volumes as defined in config.toml and Dockerfile of build image (ruby:2.1 as in above example).
+Create build container and link any service container to build container.
+Start build container and send job script to the container.
+Run job script.
+Checkout code in: /builds/group-name/project-name/.
+Run any step defined in .gitlab-ci.yml.
+Check exit status of build script.
+Remove build container and all created service containers
 
 ```
 
-- [gitlab.yml](http://livedig.com/724)
+- .gitlab-ci.yml DEMO
+```
+stages:
+  - step1
+  - step2
+  - step3
+
+job1:
+  stage: step1
+  script:
+    - echo 'start...'
+
+job2:
+  stage: step2
+  script:
+    - id -
+    - whoami
+    - uname -a
+    - pwd
+
+job3:
+  stage: step3
+  script:
+    - cd /bin && ls -l
+```
+
+- [gitlab-ci.yml](http://livedig.com/724)
 ```
 image 关键字
 
@@ -135,23 +251,89 @@ Docker 在 run 命令中提供了两个很重要的选项 --privileged 和 --dev
 --device 选项可以供我们在不使用 --privileged 选项时，访问到指定设备, 比如 docker run --device=/dev/sda:/dev/xvdc --rm -it ubuntu fdisk /dev/xvdc 但是这也只是有限的权限， 我们知道 docker 的技术实现其实是基于 cgroup 的资源隔离，而 --device 却不足于让我们在容器内有足够的权限来完成 docker daemon 的启动。
 ```
 
+- .gitlab-ci.yml 问题
+```
+gitlab-ci 中 脚本可使用的命令
+一、git 在以下情况可用： 
+1、未设置 image 
+2、设置 image: node | ruby ...
+
+二、git 在以下情况不可用：
+1、image: docker
+
+三、git clone  git://username:password@gitlab.example.com/xxx.git 可以把用户名和密码带着
+
+四、docker 命令可用
+image: docker
+service: docker:dind
+
+
+
+```
+
+- gitlab webhook
+```
+1、本地测试 webhook
+管理员 设置(settting) ==》 外发请求(Outboound requests) ==》 Allow requests to the local network from hooks and services
+2、webhook url 设置 ip 形式，而非 localhost
+
+3、常用库
+npm install --save node-gitlab-webhook
+
+::
+var http = require('http')
+var createHandler = require('node-gitlab-webhook')
+var handler = createHandler([ // multiple handlers
+  { path: '/webhook1', secret: 'secret1' },
+  { path: '/webhook2', secret: 'secret2' }
+])
+// var handler = createHandler({ path: '/webhook1', secret: 'secret1' }) // single handler
+
+http.createServer(function (req, res) {
+  handler(req, res, function (err) {
+    res.statusCode = 404
+    res.end('no such location')
+  })
+}).listen(7777)
+
+handler.on('error', function (err) {
+  console.error('Error:', err.message)
+})
+
+handler.on('push', function (event) {
+  console.log(
+    'Received a push event for %s to %s',
+    event.payload.repository.name,
+    event.payload.ref
+  )
+  switch (event.path) {
+    case '/webhook1':
+      // do sth about webhook1
+      break
+    case '/webhook2':
+      // do sth about webhook2
+      break
+    default:
+      // do sth else or nothing
+      break
+  }
+})
+```
+
+- 其他一些思考
+```
+什么情况下需要注册Shared Runner？
+比如，GitLab上面所有的工程都有可能需要在公司的服务器上进行编译、测试、部署等工作，这个时候注册一个Shared Runner供所有工程使用就很合适。
+
+什么情况下需要注册Specific Runner？
+比如，我可能需要在我个人的电脑或者服务器上自动构建我参与的某个工程，这个时候注册一个Specific Runner就很合适。
+
+什么情况下需要在同一台机器上注册多个Runner？
+比如，我是GitLab的普通用户，没有管理员权限，我同时参与多个项目，那我就需要为我的所有项目都注册一个Specific Runner，这个时候就需要在同一台机器上注册多个Runner。
+```
 
 - 历史记录
 ```
-docker exec -it gitlab cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
-docker exec -it gitlab-runner gitlab-runner register
-
-
-# 挂载宿主机的 sock
-docker run -d --name gitlab-runner --restart always  -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock --link gitlab gitlab/gitlab-runner:latest
-docker run -d --name gitlab-runner --restart always  -v /var/run/docker.sock:/var/run/docker.sock --link gitlab gitlab/gitlab-runner:latest
-curl --header "PRIVATE-TOKEN: 9koXpg98eAheJpvBs5tK" "http://localhost/api/v4/runners"
-docker run -d  -h localhost  -p 443:443 -p 80:80 -p 22:22  --name gitlab --restart always gitlab/gitlab-ce:latest
-docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
-
-which docker:
-/usr/local/bin/docker
-
 usermod -a -G root gitlab-runner
 usermod -a -G group1 user1 添加用户user1到组group1里
 
@@ -162,14 +344,6 @@ volumes = [“/var/run/docker.sock:/var/run/docker.sock”, “/cache”]
 这样在容器中装载/var/run/docker.sock，使得构建的容器保存在主机本身的镜像存储中。这是一个比Docker更好的方法。
 
 config.toml的修改是由Runner自动执行的，因此无需重新启动。
-
-
-ERROR:
-fatal: unable to access 'http://gitlab-ci-token:xxxxxxxxxxxxxxxxxxxx@localho
-docker exec -it gitlab-runner vi /etc/gitlab-runner/config.toml
-修改Runner的/etc/gitlab-runner/config.toml文件，在其中的[runner.docker]下增加：
-extra_hosts = ["localhost:172.17.0.1"]
-
 
 ERROR:
 docker exec -it gitlab-ci-multi-runner bash
