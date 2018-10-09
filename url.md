@@ -1,0 +1,87 @@
+protocol
+
+- data:
+- blob:
+
+
+```
+var blob = new Blob(["Hello, world!"], { type: 'text/plain' });
+var blobUrl = URL.createObjectURL(blob);
+var xhr = new XMLHttpRequest;
+xhr.responseType = 'blob';
+xhr.onload = function() {
+   var recoveredBlob = xhr.response;
+   var reader = new FileReader;
+   reader.onload = function() {
+     var blobAsDataUrl = reader.result;
+     window.location = blobAsDataUrl;
+   };
+   reader.readAsDataURL(recoveredBlob);
+};
+xhr.open('GET', blobUrl);
+xhr.send();
+```
+
+### Not allowed to navigate top frame to data URL, you can navigate iframe to data URL
+
+```
+var pdf = "data:application/pdf;base64," + data;
+window.open(pdf);
+在Chrome使用window.open()打开pdf报错：
+
+Not allowed to navigate top frame to data URL: data:application/pdf;base64,JVBERi0xLjMKMyAwIG9iago8PC9UeXBlIC9QYWdlCi9QYXJlbnQgMSAwIFIKL1....
+原因分析
+Chrome 60 开始禁止页面使用data:url的方式跳转导航，禁止data:url导航的使用包括：
+
+<a href="data:xxxxx"> 点击跳转
+window.open(“data:xxx”)
+window.location="data:xxx"
+对于使用data:url直接来加载数据的场景不会禁止，如
+
+<img src="data:xxx" />直接加载图片
+<iframe src="data:xxx" 
+之所以禁止页面使用dta:url的方式跳转导航，是由于data:xxx协议存在安全问题，编码的url可能会被包含了一些攻击代码，被用来做网络钓鱼攻击。
+
+解决方案
+Chrome并没有禁止直接使用data:url的方式加载数据，如iframe，所以可以把数据放到iframe的属性src里。
+
+var pdf = blobUrl;
+var ifa = '<iframe src="' + pdf + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>'
+
+e.g.
+var win = window.open();
+win.document.write(ifa)
+or
+document.body.innerHTML = ifa;
+
+
+e.g.2
+let ifa = '<iframe src="' + 'data:application/pdf;base64, sdfsdf' + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>';document.body.innerHTML = ifa;
+```
+
+### blob转base64位 和 base64位转blob
+**dataURL to blob**
+```
+function dataURLtoBlob(dataurl) {
+var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+while (n--) {
+u8arr[n] = bstr.charCodeAt(n);
+}
+return new Blob([u8arr], { type: mime });
+}
+
+**blob to dataURL**
+
+function blobToDataURL(blob, callback) {
+var a = new FileReader();
+a.onload = function (e) { callback(e.target.result); }
+a.readAsDataURL(blob);
+}
+
+//test:
+//var blob = dataURLtoBlob('data:text/plain;base64,YWFhYWFhYQ==');
+//blobToDataURL(blob, function (dataurl) {
+// console.log(dataurl);
+//});
+```
