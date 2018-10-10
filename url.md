@@ -1,12 +1,55 @@
 protocol
 
+
+### btoa & atob
+atob() 函数能够解码通过base-64编码的字符串数据。相反地,btoa() 函数能够从二进制数据“字符串”创建一个base-64编码的ASCII字符串
+```
+中文编码一直都是程序员要关注的，window.btoa('哎哟不错')，是会抛出异常的。
+
+那么一般的思想都是先借用encodeURIComponent进行base64编码，
+
+然后借用decodeURIComponent进行base64解码。
+
+后看到MDN的备注，
+
+复制代码
+function utf8_to_b64( str ) {
+    return window.btoa(unescape(encodeURIComponent( str )));
+}
+
+function b64_to_utf8( str ) {
+    return decodeURIComponent(escape(window.atob( str )));
+}
+
+// Usage:
+utf8_to_b64('✓ à la mode'); // "4pyTIMOgIGxhIG1vZGU="
+b64_to_utf8('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
+//译者注:在js引擎内部,encodeURIComponent(str)相当于escape(unicodeToUTF8(str))
+//所以可以推导出unicodeToUTF8(str)等同于unescape(encodeURIComponent(str))
+```
+
+
+- URL||webkitURL
 - data:
-- blob:
+- Blob || BlobBuilder:
+
+```
+- Blob or BlobBuilder
+try {
+    blob = new Blob([response], {type: 'application/javascript'});
+} catch (e) { // Backwards-compatibility
+    window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+    blob = new BlobBuilder();
+    blob.append(response);
+    blob = blob.getBlob();
+}
+```
 
 
 ```
+
 var blob = new Blob(["Hello, world!"], { type: 'text/plain' });
-var blobUrl = URL.createObjectURL(blob);
+var blobUrl = URL.createObjectURL(blob); // create a v address.
 var xhr = new XMLHttpRequest;
 xhr.responseType = 'blob';
 xhr.onload = function() {
