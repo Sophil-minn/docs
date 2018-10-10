@@ -38,3 +38,12 @@ babel-polyfill:转换新的API，比如Iterator、Generator、Set、Maps、Proxy
 babel-runtime:作用也是模拟 ES2015 环境.只不过，babel-polyfill 是针对全局环境的引入它的，babel-runtime 更像是分散的 polyfill 模块，我们可以在自己的模块里单独引入，比如 require(‘babel-runtime/core-js/promise’) ，它们不会在全局环境添加未实现的方法，，只是，这样手动引用每个 polyfill 会非常低效。我们借助 Runtime transform 插件来自动化处理这一切。
 npm install --save-dev babel-plugin-transform-runtime    
 npm install --save babel-runtime;
+
+#### readline
+```
+ctrl-c 发送 SIGINT 信号给前台进程组中的所有进程。常用于终止正在运行的程序。 
+ctrl-z 发送 SIGTSTP 信号给前台进程组中的所有进程，常用于挂起一个进程。 
+ctrl-d 不是发送信号，而是表示一个特殊的二进制值，表示 EOF。 
+ctrl-\ 发送 SIGQUIT 信号给前台进程组中的所有进程，终止前台进程并生成 core 文件。 
+kill -SIGCONT PID 发送 SIGCONT信号，让一个停止(stopped)的进程继续执行.
+```
