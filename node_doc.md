@@ -47,3 +47,59 @@ ctrl-d 不是发送信号，而是表示一个特殊的二进制值，表示 EOF
 ctrl-\ 发送 SIGQUIT 信号给前台进程组中的所有进程，终止前台进程并生成 core 文件。 
 kill -SIGCONT PID 发送 SIGCONT信号，让一个停止(stopped)的进程继续执行.
 ```
+
+### nodejs 搜索路径修改 - 重写源码
+- 每个js 文件为一个 module 实例，拥有自己独立的 module.paths 搜索路径 数组
+- 修改某 module.paths 只影响此 module 的搜索路径
+- 所以，如果想实现全局修改 整个应用的 的搜索路径，可以重写 Module._initPath 方法 （npm 包：app-module-path 实现这种方法）
+```
+// 初始化全局的依赖加载路径
+Module._initPaths = function() {
+  ...
+  var paths = [path.resolve(process.execPath, '..', '..', 'lib', 'node')];
+
+  if (homeDir) {
+    paths.unshift(path.resolve(homeDir, '.node_libraries'));
+    paths.unshift(path.resolve(homeDir, '.node_modules'));
+  }
+
+  // 我们需要着重关注此处，获取环境变量“NODE_PATH”
+  var nodePath = process.env['NODE_PATH'];
+  if (nodePath) {
+    paths = nodePath.split(path.delimiter).concat(paths);
+  }
+
+  // modulePaths记录了全局加载依赖的根目录，在Module._resolveLookupPaths中有使用
+  modulePaths = paths;
+
+  // clone as a read-only copy, for introspection.
+  Module.globalPaths = modulePaths.slice(0);
+};
+
+// @params: request为加载的模块名 
+// @params: parent为当前模块（即加载依赖的模块）
+Module._resolveLookupPaths = function(request, parent) {
+  ...
+ 
+  var start = request.substring(0, 2);
+  // 若为引用模块名的方式，即require('gulp')
+  if (start !== './' && start !== '..') {
+    // 此处的modulePaths即为Module._initPaths函数中赋值的变量
+    var paths = modulePaths;
+    if (parent) {
+      if (!parent.paths) parent.paths = [];
+      paths = parent.paths.concat(paths);
+    }
+    return [request, paths];
+  }
+
+  // 使用eval执行可执行字符串的情况下，parent.id 和parent.filename为空
+  if (!parent || !parent.id || !parent.filename) {
+    var mainPaths = ['.'].concat(modulePaths);
+    mainPaths = Module._nodeModulePaths('.').concat(mainPaths);
+    return [request, mainPaths];
+  }
+  
+  ...
+};
+```
