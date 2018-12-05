@@ -50,7 +50,7 @@ kill -SIGCONT PID 发送 SIGCONT信号，让一个停止(stopped)的进程继续
 
 ### nodejs 搜索路径修改 - 重写源码
 - 每个js 文件为一个 module 实例，拥有自己独立的 module.paths 搜索路径 数组
-- 修改某 module.paths 只影响此 module 的搜索路径
+- 修改某 module.paths 只影响此 module 的搜索路径 (module.paths.push(url))
 - 所以，如果想实现全局修改 整个应用的 的搜索路径，可以重写 Module._initPath 方法 （npm 包：app-module-path 实现这种方法）
 ```
 // 初始化全局的依赖加载路径
@@ -102,4 +102,10 @@ Module._resolveLookupPaths = function(request, parent) {
   
   ...
 };
+```
+
+#### 不使用require缓存
+- 在监听个性文件时，如果要求，require(file) 为最新，刚要不使用 require缓存
+```
+delete require.cache[file]
 ```
