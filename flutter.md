@@ -29,6 +29,7 @@ z: Stack - web:absolute
 - TextStyle
 - RaisedButton
 
+- launch(url) # 打开默认浏览器
 
 ### 
 ```
@@ -40,49 +41,70 @@ debugPaintSizeEnabled = true;      //打开视觉调试开关
 ![生命周期](5316822-c9777f9315c20b2a.png)
 
 
-### 文件导入导出
-```
-import 'B.dart';
-import 'http://hello/hello.dart'; #使用网络资源
-import'package:hello/hello.dart'; #严谨的做法
-import 'package:math' show Random; #选择导入
-import 'package:math' hide Random; #选择不导入
-import 'package:math' as mymath; #解决变量名冲突的办法
-
-Part与import有什么区别
-可见性：
-如果说在A库中import了B库，A库对B库是不可见的，也就是说B库是无法知道A库的存在的。而part的作用是将一个库拆分成较小的组件。两个或多个part共同构成了一个库，它们彼此之间是知道互相的存在的。
-作用域：
-import不会完全共享作用域，而part之间是完全共享的。如果说在A库中import了B库，B库import了C库，A库是没有办法直接使用C库的对象的。而B,C若是A的part，那么三者共享所有对象。并且包含所有导入。
-
-```
 
 ### 请求拦截
-
+- 统一拦截
+- 统一设置
+- 统一处理
 
 ### 组件通信
+- 父子通信
+- 兄弟通信
+- 状态管理
+
+
+### [手势识别器分类](https://www.jianshu.com/p/3b87ddb022af)
+- Flutter中的GestureDetector一共有 7大类25种。
+```
+Tap：
+onTapDown: (details) {},
+onTapUp: (details) {},
+onTap: () {},
+onTapCancel: () {},
+
+双击：
+onDoubleTap: () {},
+
+长按：
+onLongPress: () {},
+onLongPressUp: () {},
+
+垂直滑动：
+onVerticalDragDown: (details) {},
+onVerticalDragStart: (details) {},
+onVerticalDragUpdate: (details) {},
+onVerticalDragEnd: (details) {},
+onVerticalDragCancel: () {},
+
+水平滑动：
+onHorizontalDragDown: (details) {},
+onHorizontalDragStart: (details) {},
+onHorizontalDragUpdate: (details) {},
+onHorizontalDragEnd: (details) {},
+onHorizontalDragCancel: () {},
+
+Pan事件：
+指针已接触屏幕并可能开始移动。
+onPanDown: (details) {},
+指针已经接触屏幕并开始移动。
+onPanStart: (details) {},
+与屏幕接触并移动的指针再次移动。
+onPanUpdate: (details) {}, 
+先前与屏幕接触并移动的指针不再与屏幕接触，并且当它停止接触屏幕时以特定速度移动。
+onPanEnd: (details) {},
+先前触发 onPanDown 的指针未完成。
+onPanCancel: () {},
+
+Scale事件：
+onScaleStart: (details) {},
+onScaleUpdate: (details) {},
+onScaleEnd: (details) {},
+
+```
 
 ### [Material Design](https://material.io/tools/icons)
 
-### [Dart编程语言入门](https://www.imooc.com/article/260329) 
-```
-支持基础的数据类型
 
-int、double、bool、String、List（数组）、Map；
-
-Map（与Python中的字典差不多），如Map gifts = {'first' : 'partridge'};
-
-List
-Runes(Unicode编码的字符串)
-symbols(在Reflection/Mirrow的时候会用到，到时候再看)
-
-函数可以有可选参数；
-
-if-else、for 循环、while 循环、switch-case、try-catch 等知识与 Java 类似；
-
-final关键字表示变量只能被赋值一次，赋值后不可再更改；
-const表示变量是编译时常量，const变量默认为final变量，const标志的常量必须在编译时就确定了它的值 
-```
 
 ### [Flutter 中文网](https://book.flutterchina.club/)
 
@@ -119,14 +141,23 @@ flutter -h
 fluter doctor
 fluter doctor --android-licenses
 
-flutter devices
-flutter emulatprs
-flutter emulatprs --launch [id]
-flutter create demo
+flutter devices # 真机
+flutter emulatprs # 模拟器
+flutter emulatprs --launch [id] #启动某个模拟器
+flutter create demo # 创建项目
 
 flutter logs
 flutter packages get
 
 flutter run
 flutter run --release
+
+flutter build apk
+flutter build ios --no-codesign
+
+#发布之前，检查pubspec.yaml、README.md以及CHANGELOG.md文件内容的完整性和正确性
+flutter packages pub publish --dry-run
+flutter packages pub publish
 ```
+
+### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
