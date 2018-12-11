@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart' hide runApp;
 import './pages/Home.dart';
+import './pages/Personal.dart';
+import './pages/WebView.dart';
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -22,7 +24,7 @@ class App extends StatelessWidget {
       home: HomePage(title: '顺风贷'),
       routes: {
         '/home': (BuildContext context) => HomePage(title: "顺风贷"),
-        // '/personal': (BuildContext context)=>HomePage(title: "首页"),
+        '/personal': (BuildContext context) => PersonalPage(title: "个人中心"),
       },
     );
   }

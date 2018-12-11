@@ -107,8 +107,6 @@ onScaleEnd: (details) {},
 ![应用栏 AppBar](http://upload-images.jianshu.io/upload_images/6218810-f0dd9afd169c166b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-### [Flutter 中文网](https://book.flutterchina.club/)
-
 
 ### [Flutter 常用工具类库](https://www.jianshu.com/p/425a7ff9d66e)
 [common_utils](https://github.com/Sky24n/common_utils)
@@ -128,11 +126,6 @@ onScaleEnd: (details) {},
 1. ScreenUtil : 获取屏幕宽、高、密度，AppBar高，状态栏高度，屏幕方向.
 1. WidgetUtil : Widget渲染监听，获取Widget宽高，在屏幕上的坐标.
 
-
-
-### [search packages](https://pub.dartlang.org/)
-
-> https://pub.dartlang.org/
 
 
 ### common command
@@ -160,5 +153,10 @@ flutter build ios --no-codesign
 flutter packages pub publish --dry-run
 flutter packages pub publish
 ```
+
+### [search packages](https://pub.dartlang.org/)
+> https://pub.dartlang.org/
+
+### [Flutter 开发文档](https://book.flutterchina.club/)
 
 ### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)

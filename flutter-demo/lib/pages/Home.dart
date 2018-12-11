@@ -83,7 +83,7 @@ class _MyHomePageState extends State<HomePage>
         actions: getActions(),
       ),
       body: getBody(),
-      bottomNavigationBar: getBottomBar(context, setState),
+      bottomNavigationBar: getBottomBar(context, setState, 0),
     );
   }
 }

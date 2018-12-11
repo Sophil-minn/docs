@@ -4,11 +4,11 @@ class BottomBar {
   int _tabIndex = 0;
   List<Widget> actions;
 
-  Image getTabIcon(int ind) {
+  Image getTabIcon(int pos, int ind) {
     var icon;
-    switch (ind) {
+    switch (pos) {
       case 0:
-        if (_tabIndex == ind) {
+        if (pos == ind) {
           icon = Image.asset(
             "lib/images/home@2x.png",
             width: 40,
@@ -22,7 +22,7 @@ class BottomBar {
           );
         break;
       case 1:
-        if (_tabIndex == ind) {
+        if (pos == ind) {
           icon = Image.asset(
             "lib/images/personal@2x.png",
             width: 40,
@@ -59,22 +59,24 @@ class BottomBar {
     return txt;
   }
 
-  Widget getBottomBar(context, setState) {
+  Widget getBottomBar(context, setState, int ind) {
     return new BottomNavigationBar(
       items: <BottomNavigationBarItem>[
-        new BottomNavigationBarItem(icon: getTabIcon(0), title: getTabTitle(0)),
-        new BottomNavigationBarItem(icon: getTabIcon(1), title: getTabTitle(1)),
+        new BottomNavigationBarItem(
+            icon: getTabIcon(0, ind), title: getTabTitle(0)),
+        new BottomNavigationBarItem(
+            icon: getTabIcon(1, ind), title: getTabTitle(1)),
       ],
       //设置显示的模式
       type: BottomNavigationBarType.fixed,
       //设置当前的索引
-      currentIndex: _tabIndex,
+      currentIndex: ind,
       //tabBottom的点击监听
       onTap: (index) {
-        if (index == 0 && _tabIndex != index) {
-          Navigator.of(context).pushNamed("/home");
-        } else if (index == 1 && _tabIndex != index) {
-          Navigator.of(context).pushNamed("/personal");
+        if (index == 0) {
+          Navigator.of(context).pushReplacementNamed("/home");
+        } else if (index == 1) {
+          Navigator.of(context).pushReplacementNamed("/personal");
         }
         setState(() {
           _tabIndex = index;
