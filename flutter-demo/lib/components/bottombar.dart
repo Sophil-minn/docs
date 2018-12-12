@@ -88,7 +88,7 @@ class BottomBar {
   List<Widget> getActions() {
     return <Widget>[
       new IconButton(
-        icon: const Icon(Icons.more_horiz),
+        icon: const Icon(Icons.menu),
         tooltip: '更多',
         onPressed: () {
           print('more...');

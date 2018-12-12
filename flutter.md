@@ -15,7 +15,8 @@
 - StatelessWidget
 - StatefulWidget
 
-### 布局
+### [Flutter 更多布局-en](https://flutter.io/docs/development/ui/widgets/layout)
+> [Flutter 更多布局-zh](https://www.jianshu.com/p/1836d8d23926)
 ```
 x: Row
 y: Column
@@ -160,3 +161,11 @@ flutter packages pub publish
 ### [Flutter 开发文档](https://book.flutterchina.club/)
 
 ### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
+
+### bug 收集
+```
+1、超过一屏会出现边界溢出 异常
+2、一般有软键盘的，都有可能会有出现 边界溢出的 问题
+3、TextField 会出现 renderbox 问题
+4、
+```

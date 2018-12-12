@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart' hide runApp;
 import './pages/Home.dart';
 import './pages/Personal.dart';
-import './pages/WebView.dart';
+import './pages/RegistLogin.dart';
+import './pages/Login.dart';
+import './pages/Certify.dart';
+import './pages/LoanList.dart';
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -25,6 +28,12 @@ class App extends StatelessWidget {
       routes: {
         '/home': (BuildContext context) => HomePage(title: "顺风贷"),
         '/personal': (BuildContext context) => PersonalPage(title: "个人中心"),
+        '/registlogin': (BuildContext context) =>
+            RegistLoginPage(title: "登录注册"),
+        '/login': (BuildContext context) => LoginPage(title: "登录"),
+        '/regist': (BuildContext context) => LoginPage(title: "注册"),
+        '/certify': (BuildContext context) => CertifyPage(title: "认证中心"),
+        '/loanlist': (BuildContext context) => LoanListPage(title: "我的借款"),
       },
     );
   }

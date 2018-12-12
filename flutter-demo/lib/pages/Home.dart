@@ -68,6 +68,7 @@ class _MyHomePageState extends State<HomePage>
           ),
           commonButton('获取额度', () {
             print('f');
+            Navigator.of(context).pushNamed("/certify");
           })
         ],
       ),
