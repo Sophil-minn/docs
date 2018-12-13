@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide runApp;
-import '../components/bottombar.dart';
 import '../components/container.dart';
 import '../components/button.dart';
 import '../components/loanlist-item.dart';
@@ -14,7 +13,7 @@ class LoanListPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<LoanListPage>
-    with BottomBar, GetContainer, Button, LoanListItem {
+    with GetContainer, Button, LoanListItem {
   Widget getBody() {
     return this.getContainer(
       Column(
@@ -57,10 +56,8 @@ class _MyHomePageState extends State<LoanListPage>
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
-        // actions: getActions(),
       ),
       body: getBody(),
-      // bottomNavigationBar: getBottomBar(context, setState, 0),
     );
   }
 }

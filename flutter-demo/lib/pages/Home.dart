@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide runApp;
-import '../components/bottombar.dart';
 import '../components/container.dart';
 import '../components/button.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -13,10 +12,21 @@ class HomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<HomePage>
-    with BottomBar, GetContainer, Button {
+class _MyHomePageState extends State<HomePage> with GetContainer, Button {
   String getImage(int i) {
     return <String>["lib/images/banner-01.png", "lib/images/banner-02.png"][i];
+  }
+
+  List<Widget> getActions() {
+    return <Widget>[
+      new IconButton(
+        icon: const Icon(Icons.menu),
+        tooltip: '更多',
+        onPressed: () {
+          print('more...');
+        },
+      ),
+    ];
   }
 
   Widget getBody() {
@@ -106,7 +116,6 @@ class _MyHomePageState extends State<HomePage>
         actions: getActions(),
       ),
       body: getBody(),
-      bottomNavigationBar: getBottomBar(context, setState, 0),
     );
   }
 }

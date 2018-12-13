@@ -5,6 +5,7 @@ import './pages/RegistLogin.dart';
 import './pages/Login.dart';
 import './pages/Certify.dart';
 import './pages/LoanList.dart';
+import './pages/BottomBar.dart';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -26,7 +27,7 @@ class App extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(title: '顺风贷'),
+      home: BottomBarPage(title: '顺风贷'),
       routes: {
         '/home': (BuildContext context) => HomePage(title: "顺风贷"),
         '/personal': (BuildContext context) => PersonalPage(title: "个人中心"),

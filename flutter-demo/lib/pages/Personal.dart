@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide runApp;
-import '../components/bottombar.dart';
 import '../components/container.dart';
 import '../components/list_item.dart';
 
@@ -12,8 +11,7 @@ class PersonalPage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<PersonalPage>
-    with BottomBar, GetContainer, ListItem {
+class _MyHomePageState extends State<PersonalPage> with GetContainer, ListItem {
   Widget getBody() {
     return this.getContainer(
         Column(
@@ -107,10 +105,8 @@ class _MyHomePageState extends State<PersonalPage>
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
-        actions: getActions(),
       ),
       body: getBody(),
-      bottomNavigationBar: getBottomBar(context, setState, 1),
     );
   }
 }

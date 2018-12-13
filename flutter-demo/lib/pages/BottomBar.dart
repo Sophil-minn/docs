@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart' hide runApp;
+import '../pages/Home.dart';
+import '../pages/Personal.dart';
 
-class BottomBar {
+class BottomBarPage extends StatefulWidget {
+  BottomBarPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<BottomBarPage> {
   int _tabIndex = 0;
   List<Widget> actions;
+
+  Widget getComponent(int i) {
+    return <Widget>[
+      new HomePage(
+        title: "首页",
+      ),
+      new PersonalPage(
+        title: "个人中心",
+      )
+    ][i];
+  }
 
   Image getTabIcon(int pos, int ind) {
     var icon;
@@ -73,11 +95,6 @@ class BottomBar {
       currentIndex: ind,
       //tabBottom的点击监听
       onTap: (index) {
-        if (index == 0) {
-          Navigator.of(context).pushReplacementNamed("/home");
-        } else if (index == 1) {
-          Navigator.of(context).pushReplacementNamed("/personal");
-        }
         setState(() {
           _tabIndex = index;
         });
@@ -85,15 +102,11 @@ class BottomBar {
     );
   }
 
-  List<Widget> getActions() {
-    return <Widget>[
-      new IconButton(
-        icon: const Icon(Icons.menu),
-        tooltip: '更多',
-        onPressed: () {
-          print('more...');
-        },
-      ),
-    ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: getComponent(_tabIndex),
+      bottomNavigationBar: getBottomBar(context, setState, _tabIndex),
+    );
   }
 }

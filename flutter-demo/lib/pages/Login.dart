@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide runApp;
-import '../components/bottombar.dart';
 import '../components/container.dart';
 import '../components/button.dart';
 import '../utils/index.dart';
@@ -14,8 +13,7 @@ class LoginPage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<LoginPage>
-    with BottomBar, GetContainer, Button {
+class _MyHomePageState extends State<LoginPage> with GetContainer, Button {
   //手机号的控制器
   TextEditingController phoneController = TextEditingController();
 
@@ -165,10 +163,8 @@ class _MyHomePageState extends State<LoginPage>
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
-        // actions: getActions(),
       ),
       body: getBody(),
-      // bottomNavigationBar: getBottomBar(context, setState, 0),
     );
   }
 }

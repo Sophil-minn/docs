@@ -175,3 +175,8 @@ flutter packages pub publish
 3、TextField 会出现 renderbox 问题
 4、
 ```
+
+### 
+- toast
+- store_redirect: A Flutter plugin to redirect users to an app page in Google Play Store and Apple App Store.
+device_info: 

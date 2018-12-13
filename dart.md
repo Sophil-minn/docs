@@ -7,18 +7,32 @@
 
 ### 基本语法
 - 所有东西都是对象，都继承自 Object： 包括数字、函数等， 默认值都是 null
-- dynamic、Object、var 可代表所有数据类型
+- dynamic、Object、var 可代表所有数据类型, var 一旦赋值不可改类型， dynamic 可更改类型
 - 语句必须以分号结束
 - 类型是可选的、动态的类型语言，可以使用 var 声明变量
 - 非 bool 类型的对象都被当作 false， 如 1 生产模式下则认为是 false
 - num = int + double
+- 私有变量 下划线 _
+```
+var：变量
+dynamic：不指定类型
+final：常量
+const：编译时常量
+```
+
 
 ### 基本运算
 - +、-、*、/
-- 
+- ~/  整除
+- is、is! 类型判断
+- as  类型转换,person as Person
 - []
 - ??、?. 、?:
+- ..
 - if...else if...else、switch...case...break、for、while、try...catch...finally
+
+- ??= 运算符 前面的变量为null，则赋值，否则不赋值 e.g. param1 ??= "world";
+- ?. 运算符 前面的变量为null，则赋值，否则不赋值 e.g. str1?.length;
 
 ### [基础类型与正则](https://blog.csdn.net/hekaiyou/article/details/51310381)
 ```
@@ -31,7 +45,7 @@
 - 无 function 声明
 - 可使用 箭头函数 =>
 - 默认返回值 null
-- 参数选，有序参数[]，无序参数{}，有默认值参数
+- 参数选，有序参数[]，无序参数{}，有默认值参数的使用 []、{} 来修饰
 - 逻辑中表示 可选参数 ?xxxx,true 表示 输入了 xxxx 参数, false 表示 未输入 xxxx 参数
 
 ### 类

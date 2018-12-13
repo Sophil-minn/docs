@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide runApp;
-import '../components/bottombar.dart';
 import '../components/container.dart';
 import '../components/button.dart';
 import '../utils/index.dart';
@@ -14,7 +13,7 @@ class RegistLoginPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<RegistLoginPage>
-    with BottomBar, GetContainer, Button {
+    with GetContainer, Button {
   //手机号的控制器
   TextEditingController phoneController = TextEditingController();
 
@@ -82,8 +81,6 @@ class _MyHomePageState extends State<RegistLoginPage>
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.all(10.0),
-                    // labelText: '请输入你的用户名)',
-                    // helperText: '请输入注册的手机号',
                   ),
                   autofocus: false,
                 ),
@@ -117,10 +114,8 @@ class _MyHomePageState extends State<RegistLoginPage>
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
-        // actions: getActions(),
       ),
       body: getBody(),
-      // bottomNavigationBar: getBottomBar(context, setState, 0),
     );
   }
 }
