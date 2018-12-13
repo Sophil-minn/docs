@@ -6,6 +6,8 @@ import './pages/Login.dart';
 import './pages/Certify.dart';
 import './pages/LoanList.dart';
 
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+
 class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -34,6 +36,26 @@ class App extends StatelessWidget {
         '/regist': (BuildContext context) => LoginPage(title: "注册"),
         '/certify': (BuildContext context) => CertifyPage(title: "认证中心"),
         '/loanlist': (BuildContext context) => LoanListPage(title: "我的借款"),
+        '/webview': (BuildContext context) => new WebviewScaffold(
+              url: "https://baidu.com/",
+              appBar: new AppBar(
+                title: new Text("Widget webview"),
+              ),
+              withZoom: true,
+              withLocalStorage: true,
+              allowFileURLs: true,
+              withLocalUrl: true,
+              appCacheEnabled: true,
+              enableAppScheme: true,
+              withJavascript: true,
+              // hidden: true,
+              // initialChild: Container(
+              //   color: Colors.redAccent,
+              //   child: const Center(
+              //     child: Text('Waiting.....'),
+              //   ),
+              // ),
+            ),
       },
     );
   }

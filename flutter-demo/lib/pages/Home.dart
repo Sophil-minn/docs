@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide runApp;
 import '../components/bottombar.dart';
 import '../components/container.dart';
 import '../components/button.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -14,6 +15,10 @@ class HomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<HomePage>
     with BottomBar, GetContainer, Button {
+  String getImage(int i) {
+    return <String>["lib/images/banner-01.png", "lib/images/banner-02.png"][i];
+  }
+
   Widget getBody() {
     return this.getContainer(
       Column(
@@ -66,9 +71,26 @@ class _MyHomePageState extends State<HomePage>
               ],
             ),
           ),
+          new ConstrainedBox(
+            child: new Swiper(
+              outer: false,
+              itemBuilder: (c, i) {
+                return new Image.asset(getImage(i));
+              },
+              pagination: new SwiperPagination(margin: new EdgeInsets.all(5.0)),
+              itemCount: 2,
+              autoplayDelay: 3000,
+            ),
+            constraints: new BoxConstraints.loose(
+              new Size(500, 170.0),
+            ),
+          ),
           commonButton('获取额度', () {
             print('f');
             Navigator.of(context).pushNamed("/certify");
+          }),
+          commonButton('Test WebView', () {
+            Navigator.of(context).pushNamed("/webview");
           })
         ],
       ),

@@ -17,6 +17,11 @@
 
 ### [Flutter 更多布局-en](https://flutter.io/docs/development/ui/widgets/layout)
 > [Flutter 更多布局-zh](https://www.jianshu.com/p/1836d8d23926)
+
+### 容器
+- 仅单个子组件容器：Center,Alignment,Container,Flexible,Expanded
+- 多个子组件容器：Row,Column,Statck
+
 ```
 x: Row
 y: Column
@@ -24,11 +29,12 @@ z: Stack - web:absolute
 ```
 - Flexible
 - Expanded (继承自 Flexible,默认要占满分配的空间)
+- Flexible组件可以使Row、Column、Flex等子组件在主轴方向有填充可用空间的能力(例如，Row在水平方向，Column在垂直方向)，但是它与Expanded组件不同，它不强制子组件填充可用空间。
 
-### 
+### 组件
 - Text
 - TextStyle
-- RaisedButton
+- RaisedButton、FlatButton...
 
 - launch(url) # 打开默认浏览器
 
