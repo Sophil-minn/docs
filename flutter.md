@@ -16,11 +16,78 @@
 - StatefulWidget
 
 ### [Flutter 更多布局-en](https://flutter.io/docs/development/ui/widgets/layout)
+> [Flutter 布局控件完结篇- 完全介绍](https://www.jianshu.com/p/01bf6da35b96)
 > [Flutter 更多布局-zh](https://www.jianshu.com/p/1836d8d23926)
+> 在flutter中，一切皆控件！一切皆控件！一切皆控件！包括：空间，留白，位置，对齐方式，文本，图标图片等
 
-### 容器
-- 仅单个子组件容器：Center,Alignment,Container,Flexible,Expanded
-- 多个子组件容器：Row,Column,Statck
+标准组件 - Standard widgets
+
+Container 给一个组件添加 padding, margins, 边界（borders）, 背景颜色或其它装饰（decorations）。
+GridView 将多个widget放在一个可滑动的表格中。
+ListView 将多个widget放在一个可滑动的列表中。
+Stack 在一个widget上面盖上另一个widget。
+
+Material Components
+
+Card 将一些相近的信息装进一个有圆角和阴影的盒子里。
+ListTile 一个Row中装载最多3行文字；可选则在前面或尾部添加图标。
+
+### 容器(布局控件-架子)
+> 仅单个子组件容器：Center,Alignment,Container,Flexible,Expanded
+> 多个子组件容器：Row,Column,Statck
+
+> 对齐(align)、缩放(size)、包装(pack)和嵌套(Nest)
+
+- Container组件
+Container是使用非常多的一个布局容器，关于Container容器的显示规则，有如下几条： 
+1. 如果Container中没有子组件，则Container会尽可能的大 
+2. 如果Container中有子组件，则Container会适应子组件的大小 
+3. 如果给Container设置了大小，则Container按照设置的大小显示 
+4. Container的显示规则除了跟自身约束和子组件有关，跟它的父组件也有关
+
+
+- Flutter中淡化了margin以及padding的区别，margin实质上也是由Padding实现的。
+Padding的布局分为两种情况：
+
+当child为空的时候，会产生一个宽为left+right，高为top+bottom的区域；
+当child不为空的时候，Padding会将布局约束传递给child，根据设置的padding属性，缩小child的布局尺寸。然后Padding将自己调整到child设置了padding属性的尺寸，在child周围创建空白区域。
+
+
+-Align的布局行为分为两种情况：
+
+当widthFactor和heightFactor为null的时候，当其有限制条件的时候，Align会根据限制条件尽量的扩展自己的尺寸，当没有限制条件的时候，会调整到child的尺寸；
+当widthFactor或者heightFactor不为null的时候，Aligin会根据factor属性，扩展自己的尺寸，例如设置widthFactor为2.0的时候，那么，Align的宽度将会是child的两倍。
+
+Align为什么会有这样的布局行为呢？原因很简单，设置对齐方式的话，如果外层元素尺寸不确定的话，内部的对齐就无法确定。因此，会有宽高因子、根据外层限制扩大到最大尺寸、外层不确定时调整到child尺寸这些行为。
+
+-Center继承自Align，只不过是将alignment设置为Alignment.center，其他属性例如widthFactor、heightFactor，布局行为，都与Align完全一样，在这里就不再单独做介绍了。Center源码如下，没有设置alignment属性，是因为Align默认的对齐方式就是居中
+
+
+- Row Flex 布局
+- Column Flex 布局
+Row的布局有六个步骤，这种布局表现来自Flex（Row和Column的父类）：
+
+首先按照不受限制的主轴（main axis）约束条件，对flex为null或者为0的child进行布局，然后按照交叉轴（ cross axis）的约束，对child进行调整；
+按照不为空的flex值，将主轴方向上剩余的空间分成相应的几等分；
+对上述步骤flex值不为空的child，在交叉轴方向进行调整，在主轴方向使用最大约束条件，让其占满步骤2所分得的空间；
+Flex交叉轴的范围取自子节点的最大交叉轴；
+主轴Flex的值是由mainAxisSize属性决定的，其中MainAxisSize可以取max、min以及具体的value值；
+每一个child的位置是由mainAxisAlignment以及crossAxisAlignment所决定。
+
+
+Flexible和 Expanded的区别是：
+Expanded 这是个用来让子项具有伸缩能力的widget
+Expanded继承自Flexible
+
+Flexible是一个控制Row、Column、Flex等子组件如何布局的组件。
+
+Flexible组件可以使Row、Column、Flex等子组件在主轴方向有填充可用空间的能力(例如，Row在水平方向，Column在垂直方向)，但是它与Expanded组件不同，它不强制子组件填充可用空间。
+
+Flexible组件必须是Row、Column、Flex等组件的后裔，并且从Flexible到它封装的Row、Column、Flex的路径必须只包括StatelessWidgets或StatefulWidgets组件(不能是其他类型的组件，像RenderObjectWidgets)。
+
+Row、Column、Flex会被Expanded撑开，充满主轴可用空间。
+Expanded组件必须用在Row、Column、Flex内，并且从Expanded到封装它的Row、Column、Flex的路径必须只包括StatelessWidgets或StatefulWidgets组件(不能是其他类型的组件，像RenderObjectWidget，它是渲染对象，不再改变尺寸了，因此Expanded不能放进RenderObjectWidget)。
+
 
 ```
 x: Row
@@ -31,9 +98,9 @@ z: Stack - web:absolute
 - Expanded (继承自 Flexible,默认要占满分配的空间)
 - Flexible组件可以使Row、Column、Flex等子组件在主轴方向有填充可用空间的能力(例如，Row在水平方向，Column在垂直方向)，但是它与Expanded组件不同，它不强制子组件填充可用空间。
 
-### 组件
+### 可视组件
 - Text
-- TextStyle
+- Icon
 - RaisedButton、FlatButton...
 
 - launch(url) # 打开默认浏览器

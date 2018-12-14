@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide runApp;
 import '../components/container.dart';
 import '../components/button.dart';
-import '../utils/index.dart';
+import '../utils/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginPage extends StatefulWidget {

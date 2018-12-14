@@ -6,6 +6,7 @@ import './pages/Login.dart';
 import './pages/Certify.dart';
 import './pages/LoanList.dart';
 import './pages/BottomBar.dart';
+import './pages/Test.dart';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -37,10 +38,11 @@ class App extends StatelessWidget {
         '/regist': (BuildContext context) => LoginPage(title: "注册"),
         '/certify': (BuildContext context) => CertifyPage(title: "认证中心"),
         '/loanlist': (BuildContext context) => LoanListPage(title: "我的借款"),
+        '/test': (BuildContext context) => TestPage(title: "测试Demo"),
         '/webview': (BuildContext context) => new WebviewScaffold(
               url: "https://baidu.com/",
               appBar: new AppBar(
-                title: new Text("Widget webview"),
+                title: new Text("WebView"),
               ),
               withZoom: true,
               withLocalStorage: true,

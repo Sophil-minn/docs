@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide runApp;
 import '../components/container.dart';
 import '../components/button.dart';
-import '../utils/index.dart';
+import '../utils/dio.dart';
 
 class RegistLoginPage extends StatefulWidget {
   RegistLoginPage({Key key, this.title}) : super(key: key);

@@ -99,8 +99,8 @@ class _MyHomePageState extends State<HomePage> with GetContainer, Button {
             print('f');
             Navigator.of(context).pushNamed("/certify");
           }),
-          commonButton('Test WebView', () {
-            Navigator.of(context).pushNamed("/webview");
+          commonButton('其它Flutter功能测试', () {
+            Navigator.of(context).pushNamed("/test");
           })
         ],
       ),
