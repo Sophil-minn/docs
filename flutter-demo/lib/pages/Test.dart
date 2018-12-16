@@ -19,8 +19,32 @@ class _MyHomePageState extends State<TestPage> with GetContainer, Button {
           commonButton("webview", () {
             Navigator.of(context).pushNamed('/webview');
           }),
-          commonButton("tt", () {
-            Navigator.of(context).pushNamed('/webview');
+          commonButton("Music", () {
+            Navigator.of(context).pushNamed('/music');
+          }),
+          commonButton("Video", () {
+            Navigator.of(context).pushNamed('/video');
+          }),
+          commonButton("Sensor", () {
+            Navigator.of(context).pushNamed('/sensor');
+          }),
+          commonButton("Record", () {
+            Navigator.of(context).pushNamed('/record');
+          }),
+          commonButton("PickImage", () {
+            Navigator.of(context).pushNamed('/pickimage');
+          }),
+          commonButton("CustomView", () {
+            Navigator.of(context).pushNamed('/customview');
+          }),
+          commonButton("xxx", () {
+            Navigator.of(context).pushNamed('/record');
+          }),
+          commonButton("xxx", () {
+            Navigator.of(context).pushNamed('/pickimage');
+          }),
+          commonButton("xxx", () {
+            Navigator.of(context).pushNamed('/customview');
           }),
         ],
       ),

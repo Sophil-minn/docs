@@ -2,17 +2,12 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class Axios {
-  // Axios()
-  static Axios instance;
+  static Axios get instance => _getInstance();
+  static Axios _instance;
+  Dio dio;
 
-  static Axios getInstance() {
-    if (instance == null) {
-      instance = new Axios();
-    }
-    return instance;
-  }
-
-  Axios() {
+  Axios._internal() {
+    // init
 // 或者通过传递一个 `options`来创建dio实例
     Object _options = Options(
       // 请求基地址,可以包含子路径，如: "https://xxxx.com/api/".
@@ -31,7 +26,7 @@ class Axios {
       },
     );
 
-    Dio dio = new Dio(_options);
+    dio = new Dio(_options);
 
     dio.interceptor.request.onSend = (Options options) {
       // 在请求被发送之前做一些事情
@@ -75,7 +70,20 @@ class Axios {
     };
   }
 
-  _request(url, method, data) {}
+  static Axios _getInstance() {
+    if (_instance == null) {
+      _instance = new Axios._internal();
+    }
+    return _instance;
+  }
+
+  get(url, {data, options}) async {
+    return await dio.get(url, data: data, options: options);
+  }
+
+  post(url, {data, options}) async {
+    return await dio.post(url, data: data, options: options);
+  }
 }
 
 // print(utf8.encode("ff"));

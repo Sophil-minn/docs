@@ -4,9 +4,10 @@ import '../components/button.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key key, this.title, this.userID}) : super(key: key);
 
   final String title;
+  final int userID;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();

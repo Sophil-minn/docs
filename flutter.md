@@ -235,6 +235,11 @@ flutter packages pub publish
 
 ### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
 
+### [flutter 资料整理](https://www.jianshu.com/p/625ed3624301)
+
+### [flutter 学习记录](https://github.com/lizhuoyuan/flutter_study)
+
+- [For Web dev](https://flutter.io/docs/get-started/flutter-for/web-devs)
 ### bug 收集
 ```
 1、超过一屏会出现边界溢出 异常

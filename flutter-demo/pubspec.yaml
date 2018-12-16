@@ -1,4 +1,4 @@
-name: first
+name: demo
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -23,6 +23,11 @@ dependencies:
   crypto: ^2.0.6
   flutter_webview_plugin: ^0.3.0+2
   flutter_swiper: ^1.1.4
+  flute_music_player: ^0.0.6
+  chewie: ^0.8.0
+  aeyrium_sensor: ^1.0.5
+  photo: ^0.1.5
+
 
 dev_dependencies:
   flutter_test:

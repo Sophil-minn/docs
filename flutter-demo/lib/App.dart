@@ -6,9 +6,14 @@ import './pages/Login.dart';
 import './pages/Certify.dart';
 import './pages/LoanList.dart';
 import './pages/BottomBar.dart';
+import './pages/Webview.dart';
+import './pages/Music.dart';
+import './pages/Video.dart';
+import './pages/Sensor.dart';
+import './pages/Record.dart';
+import './pages/PickImage.dart';
+import './pages/CustomView.dart';
 import './pages/Test.dart';
-
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -39,26 +44,15 @@ class App extends StatelessWidget {
         '/certify': (BuildContext context) => CertifyPage(title: "认证中心"),
         '/loanlist': (BuildContext context) => LoanListPage(title: "我的借款"),
         '/test': (BuildContext context) => TestPage(title: "测试Demo"),
-        '/webview': (BuildContext context) => new WebviewScaffold(
-              url: "https://baidu.com/",
-              appBar: new AppBar(
-                title: new Text("WebView"),
-              ),
-              withZoom: true,
-              withLocalStorage: true,
-              allowFileURLs: true,
-              withLocalUrl: true,
-              appCacheEnabled: true,
-              enableAppScheme: true,
-              withJavascript: true,
-              // hidden: true,
-              // initialChild: Container(
-              //   color: Colors.redAccent,
-              //   child: const Center(
-              //     child: Text('Waiting.....'),
-              //   ),
-              // ),
-            ),
+        '/music': (BuildContext context) => MusicPage(title: "Music"),
+        '/video': (BuildContext context) => VideoPage(title: "Vedio"),
+        '/sensor': (BuildContext context) => SensorPage(title: "Sensor"),
+        '/record': (BuildContext context) => RecordPage(title: "record"),
+        '/customview': (BuildContext context) =>
+            CustomViewPage(title: "customview"),
+        '/pickimage': (BuildContext context) =>
+            PickImagePage(title: "pickimage"),
+        '/webview': (BuildContext context) => WebviewPage(title: "webview"),
       },
     );
   }
