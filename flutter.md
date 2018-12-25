@@ -2,10 +2,16 @@
 
 ### install
 - 重新安装 AS(不使用代理,disable.android.first.run=true)、Java、flutter(git clone -b beta)
-- flutter 插件安装（AS 或 VS ）
+- XCode 安装
+- flutter 插件安装（AS 或 VS 或 XCode）
 - ~/.bash_profile 环境变量配置
 - flutter doctor
-- AS 中创建 VM , VS中开发
+- 创建 Android|IOS 模拟器  
+- AS|VS|XCode 开发
+
+> 注意： flutter 开发中有热加载，但不是所有文件的修改都是进行热加载，仅有带有页面布局的页面才会进行热加载; 虽然不会进行热重载但依然进语法检测。
+
+
 
 ### class
 

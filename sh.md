@@ -1,5 +1,17 @@
 
 
+用户权限管理
+- 每个用户创建时都会自动创建一个组，且这个组只此用户一个用户 （此用户为户主，此组为此用户的主组）
+- 用户除了主组也可以有多个附加组（uid=1(bin) gid=1(bin) groups=1(bin),2(daem),3(sys)）
+![](https://s3.51cto.com/wyfs02/M01/8D/72/wKioL1ichHby9VfGAAAgEgTv0EY748.png)
+- 用户及主组配置文件 /etc/passwd
+- 用户及密码配置 /etc/shadow
+- 附加组及其属性信息 /etc/group
+- 
+```
+
+```
+
 
 1、脚本的创建 xxx.sh
 2、开头 #!/bin/sh  or #!/bin/bash
