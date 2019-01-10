@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide runApp;
-import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 import '../components/container.dart';
+import './WebviewImp.dart';
+
+
 
 class WebviewPage extends StatefulWidget {
   WebviewPage({Key key, this.title}) : super(key: key);
@@ -12,43 +14,27 @@ class WebviewPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<WebviewPage> with GetContainer {
-  InAppWebViewController webView;
-  String url = "";
-  double progress = 0;
+  WebviewImp inAppBrowser = new WebviewImp();
 
   @override
+  void initState() {
+    super.initState();
+    print('handlerNameTest ready');
+    // listen for post messages coming from the JavaScript side
+    int indexTest = this.inAppBrowser.webViewController.addJavaScriptHandler("handlerNameTest", (arguments) async {
+      print("handlerNameTest arguments");
+      print(arguments); // it prints: [1, 5, string, {key: 5}, [4, 6, 8]]
+    });
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    return InAppWebView(
-      initialUrl: "https://flutter.io/",
-      initialHeaders: {},
-      initialOptions: {
-        "useShouldOverrideUrlLoading": true,
-        "useOnLoadResource": true,
-        "clearCache": true,
-        "disallowOverScroll": true,
-        "domStorageEnabled": true,
-        "supportZoom": false,
-        "toolbarBottomTranslucent": false,
-        "allowsLinkPreview": false
-      },
-      onWebViewCreated: (InAppWebViewController controller) {
-        webView = controller;
-        controller.addJavaScriptHandler("handlerNameTest", (arguments) async {
-          print("handlerNameTest arguments");
-          print(arguments); // it prints: [1, 5, string, {key: 5}, [4, 6, 8]]
-        });
-      },
-      onLoadStart: (InAppWebViewController controller, String url) {
-        print("started $url");
-        setState(() {
-          this.url = url;
-        });
-      },
-      onProgressChanged: (InAppWebViewController controller, int progress) {
-        setState(() {
-          this.progress = progress / 100;
-        });
-      },
-    );
+    return new RaisedButton(onPressed: () async {
+            await this.inAppBrowser.open(url: "http://192.168.2.172:8081/index.html?v=10", options: {
+              "useShouldOverrideUrlLoading": true,
+              "useOnLoadResource": true,
+              "clearCache": true,
+            });
+          },child: Text("Open InAppBrowser"),);
   }
 }
