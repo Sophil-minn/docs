@@ -2,8 +2,6 @@ import 'package:flutter/material.dart' hide runApp;
 import '../components/container.dart';
 import './WebviewImp.dart';
 
-
-
 class WebviewPage extends StatefulWidget {
   WebviewPage({Key key, this.title}) : super(key: key);
 
@@ -21,20 +19,26 @@ class _MyHomePageState extends State<WebviewPage> with GetContainer {
     super.initState();
     print('handlerNameTest ready');
     // listen for post messages coming from the JavaScript side
-    int indexTest = this.inAppBrowser.webViewController.addJavaScriptHandler("handlerNameTest", (arguments) async {
+    int indexTest = this
+        .inAppBrowser
+        .webViewController
+        .addJavaScriptHandler("handlerNameTest", (arguments) async {
       print("handlerNameTest arguments");
       print(arguments); // it prints: [1, 5, string, {key: 5}, [4, 6, 8]]
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return new RaisedButton(onPressed: () async {
-            await this.inAppBrowser.open(url: "http://192.168.2.172:8081/index.html?v=10", options: {
-              "useShouldOverrideUrlLoading": true,
-              "useOnLoadResource": true,
-              "clearCache": true,
-            });
-          },child: Text("Open InAppBrowser"),);
+    return new RaisedButton(
+      onPressed: () async {
+        await this.inAppBrowser.open(url: "http://baidu.com/", options: {
+          "useShouldOverrideUrlLoading": true,
+          "useOnLoadResource": true,
+          "clearCache": true,
+        });
+      },
+      child: Text("Open InAppBrowser"),
+    );
   }
 }

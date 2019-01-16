@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 
-String generateMd5(String data) {
+String sign(String data) {
+  // String str = json.decode(data);
   var content = new Utf8Encoder().convert(data);
   //直接把utf8 -> md5: digest = md5.convert(content);
   // or utf8->b64->md5

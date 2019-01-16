@@ -37,8 +37,8 @@ class _MyHomePageState extends State<TestPage> with GetContainer, Button {
           commonButton("CustomView", () {
             Navigator.of(context).pushNamed('/customview');
           }),
-          commonButton("xxx", () {
-            Navigator.of(context).pushNamed('/record');
+          commonButton("DIO", () {
+            Navigator.of(context).pushNamed('/dio');
           }),
           commonButton("xxx", () {
             Navigator.of(context).pushNamed('/pickimage');

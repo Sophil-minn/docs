@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide runApp;
 import '../components/container.dart';
 import '../components/button.dart';
-import '../utils/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginPage extends StatefulWidget {
@@ -136,20 +135,11 @@ class _MyHomePageState extends State<LoginPage> with GetContainer, Button {
             padding: EdgeInsets.only(top: 40),
             child: commonButton("登录", () {
               showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: Text('手机号码格式不对'),
-                      ));
-
-              // dio.post('/interface/api/u_m_getUserInfo', data: {
-              //   "paramMap": {
-              //     "appId": "sfd",
-              //     "mobilePhone": "15432311232",
-              //     "bizId": "sfd"
-              //   }
-              // }).then((res) {
-              //   print(res);
-              // });
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text('手机号码格式不对'),
+                    ),
+              );
             }),
           ),
         ],

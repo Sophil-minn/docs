@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'dart:convert';
+import './sign.dart';
 
 class Axios {
   static Axios get instance => _getInstance();
@@ -11,7 +13,7 @@ class Axios {
 // 或者通过传递一个 `options`来创建dio实例
     Object _options = Options(
       // 请求基地址,可以包含子路径，如: "https://xxxx.com/api/".
-      baseUrl: "http://service.mzftech.cn/",
+      baseUrl: "http://service205.mzftech.cn/",
       //连接服务器超时时间，单位是毫秒.
       connectTimeout: 5000,
 
@@ -20,7 +22,7 @@ class Axios {
       ///  注意: 这并不是接收数据的总时限.
       receiveTimeout: 3000,
       headers: {
-        'user-agent': 'dio',
+        // 'user-agent': 'dio',
         "contentType": ContentType.parse("application/json"),
         // "sign": '6896823967def669e294f0bf163d193e',
       },
@@ -34,11 +36,13 @@ class Axios {
       // 加其它信息
       options.headers['tendId'] = 6;
       options.headers['version'] = '1.0.0';
-      options.headers['client'] = 'xxxx';
+      options.headers['aliasName'] = 'sfd';
+      options.headers['clientType'] = '4';
       // token
-      options.headers['token'] = 'ff';
+      // options.headers['token'] = 'ff';
       // 加签
-      options.headers["sign"] = "fff";
+      options.headers["sign"] = sign(options.data.toString());
+      print(options.headers["sign"]);
 
       return options; //continue
       // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。

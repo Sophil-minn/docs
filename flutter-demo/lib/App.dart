@@ -13,6 +13,7 @@ import './pages/Sensor.dart';
 import './pages/Record.dart';
 import './pages/PickImage.dart';
 import './pages/CustomView.dart';
+import './pages/Dio.dart';
 import './pages/Test.dart';
 
 class App extends StatelessWidget {
@@ -53,6 +54,7 @@ class App extends StatelessWidget {
         '/pickimage': (BuildContext context) =>
             PickImagePage(title: "pickimage"),
         '/webview': (BuildContext context) => WebviewPage(title: "webview"),
+        '/dio': (BuildContext context) => DioPage(title: "DIO"),
       },
     );
   }
