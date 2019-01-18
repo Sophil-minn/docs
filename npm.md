@@ -28,7 +28,47 @@ $ npm set init-license 'MIT'
 npm info
 
 
+#### npm 默认提供下面这些钩子。
+
+prepublish，postpublish
+preinstall，postinstall
+preuninstall，postuninstall
+preversion，postversion
+pretest，posttest
+prestop，poststop
+prestart，poststart
+prerestart，postrestart
+
+#### npm 版本管理
+
+一般来说，我们会采用semver的方式进行版本的管理。
+
+也就是三段的版本，分别是 major.minor.patch
+
+npm 工具提供了 version 命令，可以用来方便地修改 package.json中的版本号，并自动commit，以及在本地创建对应的tag。
+
+- 当有大版本更新，或不兼容之前版本时，应升级major字段 `npm version major`
+
+- 当有小版本更新，加入新功能时，可升级 minor 版本 `npm version minor`
+
+- 当有bug修复，小的调整时，则升级patch版本 `npm version patch`
+
+npm version会同时创建时 `v版本号` 形式的tag，将tag push上去就可以自动触发构建了。
+
+也可以简化这步操作，在npm version操作后自动 push
+
+在 package.json中加入下面的代码，即可实现npm version操作后，自动push代码及tag，也就自动触发了 npm 发布操作。
+
+```
+  "scripts": {
+    "postversion": "git push --follow-tags"
+  }
+```
+
+
+
 #### package.json 与 package-lock.json 版本依赖逻辑 三次变化
+
 自npm 5.0版本发布以来，npm i的规则发生了三次变化。
 
 　　1、npm 5.0.x 版本，不管package.json怎么变，npm i 时都会根据lock文件下载
