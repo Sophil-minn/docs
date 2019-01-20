@@ -65,7 +65,53 @@ npm version会同时创建时 `v版本号` 形式的tag，将tag push上去就�
   }
 ```
 
+锁定依赖之依赖的版本号 `npm shrinkwrap` 它会生成一个npm-shrinkwrap.json文件,运行npm install命令时，npm首先会找npm-shrinkwrap.json文件，依照其中的信息来准确地安装每一个依赖包，只有当这个文件不存在时，npm才会使用package.json
 
+### 版本兼容
+~ 会匹配最近的小版本依赖包，比如~1.2.3会匹配所有1.2.x版本，但是不包括1.3.0
+^ 会匹配最新的大版本依赖包，比如^1.2.3会匹配所有1.x.x的包，包括1.3.0，但是不包括2.0.0
+* 这意味着安装最新版本的依赖包
+
+
+### sdf
+"ui-axios": "file:plugins/ui-axios"
+"ui-axios": "git"
+"reflect-metadata": "^0.1.12"
+"reflect-metadata": "~0.1.12"
+"reflect-metadata": "*", 
+
+### npm 公用包来说是比较方便的，直接引用即可。而内网的代码应该怎么引入呢？大概有以下几种方式：
+
+npm 公有包
+npm 私有包
+搭建 npm 私有服务器
+git 仓库
+
+npm 对于安装 git 仓库的命令：
+
+npm install <git remote url>
+实际上就是直接 install 一个 URL 而已。对于一些公有仓库， npm 还是做了一些集成的，比如 github等(示例全部出自 npm 官方文档):
+
+npm install github:mygithubuser/myproject
+npm install bitbucket:mybitbucketuser/myproject
+npm install gitlab:myusr/myproj#semver:^5.0
+如果我们直接安装 github 上，使用网址的方式可以表示为：
+
+npm install git+https://isaacs@github.com/npm/npm.git
+看下 npm 安装 git 仓库的协议：
+
+> <protocol>://[<user>[:<password>]@]<hostname>[:<port>][:][/]<path>[#<commit-ish> | #semver:<semver>]
+
+```
+直接写 #branch 表示需要安装的分支号。
+
+所以在开发过程中我们可以这么写包：
+
+npm i git+https://username:password@git.example.com/path/reposity#master
+或者使用打的 tag
+
+npm i git+https://username:password@git.example.com/path/reposity#1.0.0
+```
 
 #### package.json 与 package-lock.json 版本依赖逻辑 三次变化
 
