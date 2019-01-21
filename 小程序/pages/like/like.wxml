@@ -1,0 +1,17 @@
+<view class="container">
+    <scroll-view  class="list" scroll-y="true">
+        <view class="movie" wx:for="{{movieData}}" wx:key="item.id">
+            <image class="pic" mode="aspectFit" src="{{item.picUrl}}" ></image>
+            <view class="box">
+                <text class="name">{{index+1}}</text>
+                <view class="score-box">
+                    <text class="score-name">豆瓣评分：</text>
+                    <text class="score">{{item.score}}</text>
+                </view>
+            </view>
+            <view class="" bindtap="onShowState" data-index="{{index}}" data-id="{{item.id}}">
+              <image class="icon btn-cross-icon" src="../../icon/cross.png"></image>
+            </view>
+        </view>
+    </scroll-view>
+</view>

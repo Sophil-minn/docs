@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/like/like",
+    "pages/unlike/unlike"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "家居助手",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#dddddd",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+            {
+                "pagePath": "pages/index/index",
+                "iconPath": "assets/index.png",
+                "selectedIconPath": "assets/index1.png",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/like/like",
+                "iconPath": "assets/like.png",
+                "selectedIconPath": "assets/like1.png",
+                "text": "喜欢"
+            },
+            {
+                "pagePath": "pages/unlike/unlike",
+                "iconPath": "assets/unlike.png",
+                "selectedIconPath": "assets/unlike1.png",
+                "text": "不喜欢"
+            }
+        ]
+    },
+    "debug":true
+}

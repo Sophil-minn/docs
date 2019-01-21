@@ -1,0 +1,43 @@
+<view class="container">
+  <scroll-view class="page-container">
+
+    <view class="list-container" wx:if="{{!isLoadingEnd}}" style="width:{{windowWidth}}px;">
+      <view wx:for="{{movieData}}" wx:key="{{item.id}}">
+        <block wx:if="{{item.isRender}}">
+          <view style="z-index:{{item.zIndex}};" class="item-container" animation="{{item.animationData}}">
+            <view class="pic-box" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+              <image class="pic" mode="aspectFit" lazyload="false" src="{{item.picUrl}}" ></image>
+              <view class="mask"></view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view wx:elif="{{isLoadingEnd}}" class="end noMore">没有更多了~</view>
+    <view class="buttons">
+      <view class="round-container" bindtap="onUnlike">
+        <view class="cross">
+          <image class="icon cross-icon" src="../../icon/cross.png"></image>
+        </view>
+      </view>
+      <!-- <view class="round-container round-big">
+        <view bindtap="toUserList" class="userinfo">
+          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        </view>
+      </view> -->
+      <view class="round-container" bindtap="onLike">
+        <view class="heart">
+          <image class="icon heart-icon" src="../../icon/heart_big.png"></image>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <dialog id='dialog' 
+      title='我是标题' 
+      content='恭喜你，学会了小程序组件' 
+      cancelText='知道了' 
+      confirm='谢谢你'
+      bind:cancelEvent="_cancelEvent"  
+      bind:confirmEvent="_confirmEvent">
+    </dialog>
+</view>
