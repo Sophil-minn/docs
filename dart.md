@@ -7,7 +7,8 @@
 
 ### 基本语法
 - 所有东西都是对象，都继承自 Object： 包括数字、函数等， 默认值都是 null
-- dynamic、Object、var 可代表所有数据类型, var 一旦赋值不可改类型， dynamic 可更改类型
+- dynamic、Object、var 可代表所有数据类型
+- var 一旦赋值不可改类型， dynamic 可更改类型
 - 语句必须以分号结束
 - 类型是可选的、动态的类型语言，可以使用 var 声明变量
 - 非 bool 类型的对象都被当作 false， 如 1 生产模式下则认为是 false
@@ -76,7 +77,7 @@ class Vector {
 ```
 import 'B.dart'; #导包dart库里面的包
 import 'http://hello/hello.dart'; #使用网络资源
-import'package:hello/hello.dart'; #严谨的做法:导入pubspec.yaml 的dependencies依赖的包
+import 'package:hello/hello.dart'; #严谨的做法:导入pubspec.yaml 的dependencies依赖的包
 import 'package:base/components/swiper.dart'; #导入路径包 base为flutter根目录
 import 'package:math' show Random; #选择导入
 import 'package:math' hide Random; #选择不导入
@@ -114,9 +115,11 @@ await关键字必须在async函数内部使用
 调用async函数必须使用await关键字});     //延迟执行后赋值给data
 }
 ```
-- Future
+- Future 异步编程|延迟计算 对象，类promise
 ```
-
+为了获得Future的值，有两种方式：
+1. 使用async和await
+2. 使用Future的接口
 ```
 
 ### [Dart编程语言入门](https://www.imooc.com/article/260329) 

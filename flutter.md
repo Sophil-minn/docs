@@ -1,3 +1,31 @@
+### [search packages](https://pub.dartlang.org/)
+> https://pub.dartlang.org/
+
+### [Flutter 开发文档](https://book.flutterchina.club/)
+
+### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
+
+### [flutter 资料整理](https://www.jianshu.com/p/625ed3624301)
+
+### [flutter 学习记录](https://github.com/lizhuoyuan/flutter_study)
+
+- 参数类型
+- 默认参数
+- 可选参数
+- 存在判定 ??= 
+- 留白（padding,margin） EdgeInsets
+- 背景
+- 边框 BoxDecoration
+- 文本及样式 Text
+- 各种形状遮罩 ClipOval
+- 触控组件 GestureDetector
+- 最值 double.infinity|MainAxisSize.max
+- 滚动区域
+- 固定宽 + 自动占满 （SizedBox + Expanded）
+- 行布局（X）
+- 列布局 (Y)
+- 层叠布局 (Z)
+
 
 
 ### install
@@ -24,7 +52,7 @@
 ### [Flutter 更多布局-en](https://flutter.io/docs/development/ui/widgets/layout)
 > [Flutter 布局控件完结篇- 完全介绍](https://www.jianshu.com/p/01bf6da35b96)
 > [Flutter 更多布局-zh](https://www.jianshu.com/p/1836d8d23926)
-> 在flutter中，一切皆控件！一切皆控件！一切皆控件！包括：空间，留白，位置，对齐方式，文本，图标图片等
+> 在flutter中，一切皆控件！一切皆控件！一切皆控件！包括：空间，留白padding，位置position，对齐方式align，文本text，图标图片icon/img等
 
 标准组件 - Standard widgets
 
@@ -37,6 +65,9 @@ Material Components
 
 Card 将一些相近的信息装进一个有圆角和阴影的盒子里。
 ListTile 一个Row中装载最多3行文字；可选则在前面或尾部添加图标。
+
+
+
 
 ### 容器(布局控件-架子)
 > 仅单个子组件容器：Center,Alignment,Container,Flexible,Expanded
@@ -234,16 +265,6 @@ flutter packages pub publish --dry-run
 flutter packages pub publish
 ```
 
-### [search packages](https://pub.dartlang.org/)
-> https://pub.dartlang.org/
-
-### [Flutter 开发文档](https://book.flutterchina.club/)
-
-### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
-
-### [flutter 资料整理](https://www.jianshu.com/p/625ed3624301)
-
-### [flutter 学习记录](https://github.com/lizhuoyuan/flutter_study)
 
 - [For Web dev](https://flutter.io/docs/get-started/flutter-for/web-devs)
 ### bug 收集
