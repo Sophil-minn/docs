@@ -1,5 +1,6 @@
 ### [search packages](https://pub.dartlang.org/)
 > https://pub.dartlang.org/
+> https://pub.flutter-io.cn/
 
 ### [Flutter 开发文档](https://book.flutterchina.club/)
 
