@@ -10,19 +10,25 @@
 
 ### [flutter 学习记录](https://github.com/lizhuoyuan/flutter_study)
 
+### [Flutter 布局控件完结篇](https://www.cnblogs.com/holy-loki/p/9735071.html)
+### [Flutter 布局控件完结篇](https://github.com/bitores/flutter-study)
+
 - 参数类型
 - 默认参数
 - 可选参数
 - 存在判定 ??= 
 - 留白（padding,margin） EdgeInsets
-- 背景
+- 背景 BoxDecoration
 - 边框 BoxDecoration
+- 阴影 BoxDecoration
+- 三维控件 Container - matrix
 - 文本及样式 Text
 - 各种形状遮罩 ClipOval
 - 触控组件 GestureDetector
 - 最值 double.infinity|MainAxisSize.max
 - 滚动区域
 - 固定宽 + 自动占满 （SizedBox + Expanded）
+- 填充剩余的空间 Expanded(若有多个可用 flex控制比例)
 - 行布局（X）
 - 列布局 (Y)
 - 层叠布局 (Z)
@@ -57,7 +63,7 @@
 
 标准组件 - Standard widgets
 
-Container 给一个组件添加 padding, margins, 边界（borders）, 背景颜色或其它装饰（decorations）。
+Container 给一个组件添加 padding, margins, 边界（borders）, 背景(background)、边线(border)、阴影(shadow)或其它装饰（BoxDecoration）。
 GridView 将多个widget放在一个可滑动的表格中。
 ListView 将多个widget放在一个可滑动的列表中。
 Stack 在一个widget上面盖上另一个widget。
