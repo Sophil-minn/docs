@@ -1,11 +1,11 @@
 
 ### git 命令 - 代码恢复
 ```
-commit 前，add 前：放弃新增的目录及文件
+add 前：放弃新增的目录及文件
 git clean -nfd
 git clean -fd
 
-commit 前，add后：放弃文件及目录的修改
+add后，commit 前：放弃文件及目录的修改
 git co -- <file>
 git co . 
 
