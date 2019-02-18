@@ -26,12 +26,31 @@
 - 各种形状遮罩 ClipOval
 - 触控组件 GestureDetector
 - 最值 double.infinity|MainAxisSize.max
+- 最大高最大宽限定 LimitedBox
+- 最大最小高宽限定 OverflowBox
+- 具体尺寸设定 SizeBox
+- SizeOverflowBox 同 OverflowBox
+- 设置宽高占百比（0-1，让子控件尺寸失效，默认子控件撑满此控件） FractionallySizedBox
+- 继承的宽高 IntrinsicHeight， IntrinsicWidth
+- Transform 三维变换组件
+- 代理其它组件来布局（常用来封装组件时使用，传入参数为其它组件）CustomSingleChildLayout
+- 同上，多子组件 CustomMultiChildLayout
+- 隐藏显示(隐藏时通过调整自身尺寸来达到不占用空间不渲染) offstage
 - 滚动区域
 - 固定宽 + 自动占满 （SizedBox + Expanded）
 - 填充剩余的空间 Expanded(若有多个可用 flex控制比例)
 - 行布局（X）
 - 列布局 (Y)
 - 层叠布局 (Z)
+
+- 定位控件：Container、Align、Center、FittedBox、Baseline、Transform。
+- 尺寸控件：Container、FittedBox、AspectRatio、ConstrainedBox、FractionallySizedBox、IntrinsicHeight、IntrinsicWidth、LimitedBox、SizedBox、SizedOverflowBox。
+- 绘制控件：Container、Padding、Offstage、OverflowBox、SizedOverflowBox、Transform。
+
+- 列表：GridView、ListView；
+- 单列单行或者多列多行：Row、Column、Flow、Wrap、ListBody、Table；
+- 显示位置相关：Stack、IndexedStack、CustomMultiChildLayout。
+
 
 
 
