@@ -225,9 +225,27 @@ service: docker:dind
 usermod -a -G root gitlab-runner
 usermod -a -G group1 user1 添加用户user1到组group1里
 
+
+如果你选择Docker作为Runner的executor，你还要选择默认的docker image来运行job（当然，你也可以在.gitlab-ci.yml里指明你需要用的image）：
+Please enter the Docker image (eg. ruby:2.1):
+alpine:latest
+
+
 在初始的注册完成后，我们需要编辑/etc/gitlab-runner/config.tom并作出调整：
 
-volumes = [“/var/run/docker.sock:/var/run/docker.sock”, “/cache”]
+  concurrent限制了整个GitLab Runner能并发处理job的数量
+
+  当我的Runner采用docker作为executor时，无法build docker image:
+  volumes = [“/var/run/docker.sock:/var/run/docker.sock”, “/cache”]
+
+  想要在拉取本地镜像时：
+  pull_policy = never  # 该配置默认always，即只在线上拉取镜像
+  always —— Runner始终从远程pull docker image。
+  if-not-present —— Runner会首先检查本地是否有该image，如果有则用本地的，如果没有则从远程拉取。
+  never —— Runner始终使用本地的image。
+
+  localhost 与ip
+  extra_hosts = ["hostname:ip"] #如果有需要添加一些hosts映射，仍然在 [runners.docker] 下，添加
 
 这样在容器中装载/var/run/docker.sock，使得构建的容器保存在主机本身的镜像存储中。这是一个比Docker更好的方法。
 
