@@ -1,3 +1,9 @@
+# 缓存
+- DNS( Domain Name System) 缓存： 浏览器dns缓存 系统dns缓存 路由器缓存→ISP DNS 缓存
+- 资源缓存 三级缓存：浏览器内存，硬盘，系统
+
+[dns 解析检测常用工具](https://www.17ce.com/)
+[全国DNS服务器地址查询](http://tools.cloudxns.net/index/around)
 # [浏览器缓存机制](http://www.cnblogs.com/shixiaomiao1122/p/7591556.html)
 
 #### 如何分析缓存（从何入手）

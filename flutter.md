@@ -1,3 +1,57 @@
+### [search packages](https://pub.dartlang.org/)
+> https://pub.dartlang.org/
+> https://pub.flutter-io.cn/
+
+### [Flutter 开发文档](https://book.flutterchina.club/)
+
+### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
+
+### [flutter 资料整理](https://www.jianshu.com/p/625ed3624301)
+
+### [flutter 学习记录](https://github.com/lizhuoyuan/flutter_study)
+
+### [Flutter 布局控件完结篇](https://www.cnblogs.com/holy-loki/p/9735071.html)
+### [Flutter 布局控件完结篇](https://github.com/bitores/flutter-study)
+
+- 参数类型
+- 默认参数
+- 可选参数
+- 存在判定 ??= 
+- 留白（padding,margin） EdgeInsets
+- 背景 BoxDecoration
+- 边框 BoxDecoration
+- 阴影 BoxDecoration
+- 三维控件 Container - matrix
+- 文本及样式 Text
+- 各种形状遮罩 ClipOval
+- 触控组件 GestureDetector
+- 最值 double.infinity|MainAxisSize.max
+- 最大高最大宽限定 LimitedBox
+- 最大最小高宽限定 OverflowBox
+- 具体尺寸设定 SizeBox
+- SizeOverflowBox 同 OverflowBox
+- 设置宽高占百比（0-1，让子控件尺寸失效，默认子控件撑满此控件） FractionallySizedBox
+- 继承的宽高 IntrinsicHeight， IntrinsicWidth
+- Transform 三维变换组件
+- 代理其它组件来布局（常用来封装组件时使用，传入参数为其它组件）CustomSingleChildLayout
+- 同上，多子组件 CustomMultiChildLayout
+- 隐藏显示(隐藏时通过调整自身尺寸来达到不占用空间不渲染) offstage
+- 滚动区域
+- 固定宽 + 自动占满 （SizedBox + Expanded）
+- 填充剩余的空间 Expanded(若有多个可用 flex控制比例)
+- 行布局（X）
+- 列布局 (Y)
+- 层叠布局 (Z)
+
+- 定位控件：Container、Align、Center、FittedBox、Baseline、Transform。
+- 尺寸控件：Container、FittedBox、AspectRatio、ConstrainedBox、FractionallySizedBox、IntrinsicHeight、IntrinsicWidth、LimitedBox、SizedBox、SizedOverflowBox。
+- 绘制控件：Container、Padding、Offstage、OverflowBox、SizedOverflowBox、Transform。
+
+- 列表：GridView、ListView；
+- 单列单行或者多列多行：Row、Column、Flow、Wrap、ListBody、Table；
+- 显示位置相关：Stack、IndexedStack、CustomMultiChildLayout。
+
+
 
 
 ### install
@@ -24,11 +78,11 @@
 ### [Flutter 更多布局-en](https://flutter.io/docs/development/ui/widgets/layout)
 > [Flutter 布局控件完结篇- 完全介绍](https://www.jianshu.com/p/01bf6da35b96)
 > [Flutter 更多布局-zh](https://www.jianshu.com/p/1836d8d23926)
-> 在flutter中，一切皆控件！一切皆控件！一切皆控件！包括：空间，留白，位置，对齐方式，文本，图标图片等
+> 在flutter中，一切皆控件！一切皆控件！一切皆控件！包括：空间，留白padding，位置position，对齐方式align，文本text，图标图片icon/img等
 
 标准组件 - Standard widgets
 
-Container 给一个组件添加 padding, margins, 边界（borders）, 背景颜色或其它装饰（decorations）。
+Container 给一个组件添加 padding, margins, 边界（borders）, 背景(background)、边线(border)、阴影(shadow)或其它装饰（BoxDecoration）。
 GridView 将多个widget放在一个可滑动的表格中。
 ListView 将多个widget放在一个可滑动的列表中。
 Stack 在一个widget上面盖上另一个widget。
@@ -37,6 +91,9 @@ Material Components
 
 Card 将一些相近的信息装进一个有圆角和阴影的盒子里。
 ListTile 一个Row中装载最多3行文字；可选则在前面或尾部添加图标。
+
+
+
 
 ### 容器(布局控件-架子)
 > 仅单个子组件容器：Center,Alignment,Container,Flexible,Expanded
@@ -234,16 +291,6 @@ flutter packages pub publish --dry-run
 flutter packages pub publish
 ```
 
-### [search packages](https://pub.dartlang.org/)
-> https://pub.dartlang.org/
-
-### [Flutter 开发文档](https://book.flutterchina.club/)
-
-### [Flutter常见问题FAQ](https://blog.csdn.net/zhangxiangliang2/article/details/75675693)
-
-### [flutter 资料整理](https://www.jianshu.com/p/625ed3624301)
-
-### [flutter 学习记录](https://github.com/lizhuoyuan/flutter_study)
 
 - [For Web dev](https://flutter.io/docs/get-started/flutter-for/web-devs)
 ### bug 收集

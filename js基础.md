@@ -1,7 +1,7 @@
 # JS 知识
 
 ### js 数据类型
-```
+```javascript
 0、六种弱数据类型 = 五种基本数据类型（Number,String,Boolean,Undefined,Null） + 一种复杂数据类型（Object）
 
 1、Array对象说它是数组，其实是一个从哈希表扩展的结构体。因此它可以提供push、splice等一些列操作。这就意味着他们的效率是很低的
@@ -24,7 +24,7 @@
 ```
 
 ### js 数据类型检测
-```
+```javascript
 1、typeof 通常用来 判断 变量 是否为 undefined
 typeof 检测基本类型(number,string,boolean,undefined)+复杂类型(object)：
   typeof   123　　      //number
