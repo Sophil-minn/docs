@@ -28,3 +28,21 @@ git push origin :<BranchName>
 git pull --all  #更新本地所有分支
 git remote update origin --prune  #更新所有分支列表
 ```
+
+### 解决使用终端执行git 命令，无权限读写的问题
+
+<red>warning: unable to access '/Users/Mac/.config/git/attributes': Permission denied<red>
+
+
+终端根目录下执行：ls -al命令查看所有文件明细：
+sudo chown user-name .config
+
+### git 设置 ALIAS 
+touch .gitconfig
+
+[alias]
+st=status
+ad=add
+cm=commit
+pl=pull
+ps=push
