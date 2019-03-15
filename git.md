@@ -37,6 +37,8 @@ git remote update origin --prune  #更新所有分支列表
 终端根目录下执行：ls -al命令查看所有文件明细：
 sudo chown user-name .config
 
+sudo chown -R $USER:$(id -gn $USER) /Users/huangzhengjie/.config
+
 ### git 设置 ALIAS 
 touch .gitconfig
 
@@ -46,3 +48,4 @@ ad=add
 cm=commit
 pl=pull
 ps=push
+
