@@ -1,3 +1,48 @@
+[安装](https://flutter.dev/docs/get-started/install/macos)
+```
+1. Determine the directory where you placed the Flutter SDK. You will need this in Step 3.
+1. Open (or create) $HOME/.bash_profile. The file path and filename might be different on your machine.
+1. Add the following line and change [PATH_TO_FLUTTER_GIT_DIRECTORY] to be the path where you cloned Flutter’s git repo:
+
+ export PATH="$PATH:[PATH_TO_FLUTTER_GIT_DIRECTORY]/flutter/bin"
+1. Run  to refresh the current window.
+
+  source $HOME/.bash_profile
+1. Verify that the flutter/bin directory is now in your PATH by running:
+
+ echo $PATH
+```
+
+
+### install
+- Anroid 下载
+- Android Studio安装目录下的bin/idea.properties文件
+- 重新安装 AS(不使用代理,disable.android.first.run=true)、Java、flutter(git clone -b beta)
+- AS预设中 Android sdk 设置即下载sdk
+- 打开android studio, 打开plugin ,输入 flutter
+
+打开 $HOME/.bash_profile , 在下方添加两行变量
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+
+然后 source $HOME/.bash_profile 使之在当前 terminal 生效.
+
+```
+Waiting for another flutter command to release the startup lock
+打开flutter的安装目录/bin/cache/
+删除lockfile文件
+```
+- XCode 安装
+- flutter 插件安装（AS 或 VS 或 XCode）
+- ~/.bash_profile 环境变量配置
+- flutter doctor
+- 创建 Android|IOS 模拟器  
+- AS|VS|XCode 开发
+
+> 注意： flutter 开发中有热加载，但不是所有文件的修改都是进行热加载，仅有带有页面布局的页面才会进行热加载; 虽然不会进行热重载但依然进语法检测。
+
+
+
 ### [search packages](https://pub.dartlang.org/)
 > https://pub.dartlang.org/
 > https://pub.flutter-io.cn/
@@ -51,19 +96,6 @@
 - 单列单行或者多列多行：Row、Column、Flow、Wrap、ListBody、Table；
 - 显示位置相关：Stack、IndexedStack、CustomMultiChildLayout。
 
-
-
-
-### install
-- 重新安装 AS(不使用代理,disable.android.first.run=true)、Java、flutter(git clone -b beta)
-- XCode 安装
-- flutter 插件安装（AS 或 VS 或 XCode）
-- ~/.bash_profile 环境变量配置
-- flutter doctor
-- 创建 Android|IOS 模拟器  
-- AS|VS|XCode 开发
-
-> 注意： flutter 开发中有热加载，但不是所有文件的修改都是进行热加载，仅有带有页面布局的页面才会进行热加载; 虽然不会进行热重载但依然进语法检测。
 
 
 
@@ -273,8 +305,8 @@ fluter doctor
 fluter doctor --android-licenses
 
 flutter devices # 真机
-flutter emulatprs # 模拟器
-flutter emulatprs --launch [id] #启动某个模拟器
+flutter emulators # 模拟器
+flutter emulators --launch [id] #启动某个模拟器
 flutter create demo # 创建项目
 
 flutter logs
