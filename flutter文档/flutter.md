@@ -32,7 +32,31 @@ Waiting for another flutter command to release the startup lock
 打开flutter的安装目录/bin/cache/
 删除lockfile文件
 ```
+
+Flutter项目在 Resolving dependencies 时卡住的解决办法
+仔细检查代理是否设置正确
+删掉~/.gradle, 再重新下载
+
+
+flutter Manifest merger failed : uses-sdk:minSdkVersion 16 cannot be smaller
+-- build.gradle
+```
+defaultConfig {
+    // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+    applicationId "com.example.flutter_app"
+    minSdkVersion 18
+    targetSdkVersion 28
+    versionCode flutterVersionCode.toInteger()
+    versionName flutterVersionName
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+}
+```
+
+
+
 - XCode 安装
+- /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
 - flutter 插件安装（AS 或 VS 或 XCode）
 - ~/.bash_profile 环境变量配置
 - flutter doctor
