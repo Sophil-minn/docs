@@ -57,6 +57,21 @@ defaultConfig {
 - XCode 安装
 - /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+一般安装完, flutter doctor -v 没有任何 ! 时,则完成了环境搭建,如果果出现以下问题, 重新创建项目即可(项目名要小写)
+
+### ...
+[!] Automatically assigning platform ios with version 8.0 on target Runner because no platform was specified. Please specify a platform for this target in your Podfile. See `https://guides.cocoapods.org/syntax/podfile.html#platform`.
+[       +2 ms] Error running pod install: Exit code 1 from: pod install
+[            ] Error launching application on iPhone 7.
+
+Add to ios/Podfile
+  platform :ios, '9.0'
+
+
+The app ID "com.example.flutterApp" cannot be registered to your development
+
+
+
 - flutter 插件安装（AS 或 VS 或 XCode）
 - ~/.bash_profile 环境变量配置
 - flutter doctor
@@ -66,6 +81,46 @@ defaultConfig {
 > 注意： flutter 开发中有热加载，但不是所有文件的修改都是进行热加载，仅有带有页面布局的页面才会进行热加载; 虽然不会进行热重载但依然进语法检测。
 
 
+## apk 正确打包
+```
+1.创建密钥库和密钥的密码
+keytool -genkey -v -keystore D:/key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias key
+
+
+
+2.android目录下创建一个key.properties文件
+
+storePassword= 刚刚创建密钥库时的密码
+keyPassword=  刚刚创建密钥的密码
+keyAlias=key
+storeFile=D:/key.jks
+
+3./android/app/build.gradle文件，在android前加入
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+4.把buildTypes换成
+signingConfigs {
+    release {
+        keyAlias "创建的密钥别名，如果不知道可以去key.jsk文件所在目录输入keytool -list -v -keystore key.jks -storepass 对应的密码"
+        keyPassword "密钥的密码"
+        storeFile file(“密钥所在文件夹，如果是按照我上面的步骤的话是D:/key.jks”)
+        storePassword "密钥库的密码"
+    }
+}
+buildTypes {
+    release {
+        signingConfig signingConfigs.release
+    }
+}
+```
+
+
+## ipa 打包
+```
+
+```
 
 ### [search packages](https://pub.dartlang.org/)
 > https://pub.dartlang.org/
