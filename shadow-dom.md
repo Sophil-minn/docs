@@ -22,11 +22,6 @@ var host = document.querySelector('#con');
 var root = host.attachShadow({mode:'open'});//为宿主附加一个影子元素
 
 root.innerHTML = "我来自shadow dom";//为影响元素附上内容，shadow dom的api和普通dom的大致相同
-
-作者：楼兰之风
-链接：https://www.jianshu.com/p/9293cac60920
-來源：简书
-简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
 ```
 
 

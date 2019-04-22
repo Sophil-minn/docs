@@ -70,7 +70,22 @@ Add to ios/Podfile
 
 The app ID "com.example.flutterApp" cannot be registered to your development
 
+Failed to create provisioning profile.
 
+There are no devices registered in your account on the developer website. Plug in and select a device to have Xcode register it.
+
+
+
+No profiles for 'com.opencv.test.OC-01' were found
+
+Xcode couldn't find any iOS App Development provisioning profiles matching 'com.opencv.test.OC-01'.
+
+问题原因可以看：
+
+https://stackoverflow.com/questions/39603667/failed-to-create-provisioning-profile
+
+如果使用模拟器可以直接测试
+真机需要添加账户信息
 
 - flutter 插件安装（AS 或 VS 或 XCode）
 - ~/.bash_profile 环境变量配置
