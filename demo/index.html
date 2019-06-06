@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 上报函数
+    function send(data) {
+      // 发起ajax请求
+      console.log(data)
+    }
+
+    // 处理数据
+    function handleData(performance) {
+      let navigationStart = performance.navigationStart || performance.fetchStart
+      let performanceData = {}
+      if (performance) {
+        // 重定向时间
+        performanceData.redirectTime = performance.redirectEnd - performance.redirectStart
+        // 缓存时间
+        performanceData.cacheTime = performance.domainLookupStart - performance.fetchStart
+        // dns查询时间
+        performanceData.dnsTime = performance.domainLookupEnd - performance.domainLookupStart
+        // tcp握手时间
+        performanceData.TcpTime = performance.connectEnd - performance.connectStart
+        // ajax请求时间
+        performanceData.ajaxTime = performance.responseEnd - performance.requestStart
+        // 开始解析dom时间，此时document.readyState 变为 loading
+        performanceData.domLoadingTime = performance.domLoading ? performance.domLoading - navigationStart : null
+        // dom解析完成时间，此时document.readyState 变为 interactive
+        performanceData.domInteractiveTime = performance.domInteractive - navigationStart
+        // dom解析完成，资源加载完成，脚本完成
+        performanceData.domContentLoadedEventEndTime = performance.domContentLoadedEventEnd - navigationStart
+        // 页面从开始到结束的全部时间时间
+        performanceData.loadPageTime = performance.loadEventEnd ? performance.loadEventEnd - navigationStart : null
+      }
+      return performanceData
+    }
+
+    // 获取first-paint及first-contentful-paint的时间
+    function getPaintTime() {
+      let obj = {}
+      if (window.performance && window.performance.getEntriesByType) {
+        let paintArr = window.performance.getEntriesByType('paint')
+        if (paintArr && paintArr.length) {
+          paintArr.forEach(function (item) {
+            obj[item.name] = item.startTime
+          })
+        }
+      }
+      return obj
+    }
+
+    // performanceObserver进行监控
+    function performanceObserver() {
+      let obj = {}
+      var observer = new PerformanceObserver(list => {
+        list.getEntries().forEach(entry => {
+          if (entry.entryType === 'paint') {
+            obj[entry.name] = entry.startTime
+          } else {
+            let temp = handleData(entry)
+            obj = Object.assign({}, obj, temp)
+          }
+        })
+        obj.from = 'window.PerformanceObserver'
+        obj.url = location.href
+        obj.timestamp = Date.now()
+        send(obj)
+      });
+      observer.observe({ entryTypes: ['navigation', 'paint'] });
+    }
+
+    // 初始化函数
+    function init() {
+      if (window.PerformanceObserver) {
+        performanceObserver()
+      } else if (window.performance) {
+        window.onload = function () {
+          let timing = window.performance.timing;
+          let performanceData = handleData(timing)
+          performanceData.timestamp = Date.now()
+          performanceData.url = location.href
+          performanceData.from = 'window.performance'
+          performanceData = Object.assign({}, performanceData, getPaintTime())
+          send(performanceData)
+        }
+      }
+    }
+
+    let performanceMonitor = {
+      init
+    }
+
+    // 开启监控...
+    performanceMonitor.init()
+
+  </script>
+  <script>
+    // 前端错误一般指的是以下两种情况：即时运行错误（代码错误）和资源加载错误。
+    window.onerror = function (message, source, lineno, colno, error) {
+      // window.onerror不能捕获资源加载错误
+      console.log("onerror ", message, source, lineno, colno, error)
+      return true;
+    }
+
+    window.addEventListener('error', function (e) {
+      e.stopPropagation()
+      e.preventDefault();
+      console.log('addEventListener error', e)
+      return true;
+    })
+
+    window.addEventListener('unhandledrejection', function (event) {
+      console.log('unhandledrejection error', event)
+    }, true);
+
+    window.addEventListener("rejectionhandled", function (e) {
+      // Event新增属性
+      // @prop {Promise} promise - 状态为rejected的Promise实例
+      // @prop {String|Object} reason - 异常信息或rejected的内容
+
+      // Uncaught(in promise) Error已经抛出，所以这句毫无意义^_^
+      e.preventDefault()
+      console.log('rejectionhandled error', event)
+    })
+
+    function config(Vue) {
+      Vue.config.errorHandler = function (err, vm, info) {
+        console.log(err)
+      }
+    }
+
+    var p = new Promise(function (resolve, reject) {
+      setTimeout(reject, 0)
+    })
+    setTimeout(function () {
+      p.catch(function (e) {
+        console.log("catch")
+        return "bingo"
+      })
+    }, 1000)
+
+    try {
+      var a = new Error('错误测试');
+      throw a;
+      console.log(a.toString())
+    } catch (error) {
+      console.log(error)
+    }
+
+
+    try {
+      setTimeout(function () {
+        throw new Error('settimeout lala--');
+      }, 0);
+    }
+    catch (e) {
+      console.log('--error', e.message);
+    }
+
+    new Promise((res, rej) => {
+      rej(22)
+      // throw new Error()
+    })
+    // .catch(e => {
+    //   console.log('promise', e)
+    // })
+
+// 错误分类
+
+// javascript异常
+
+// 语法错误
+// 运行时错误
+// script文件内错误(跨域和未跨域)
+
+
+// JS文件、CSS文件、img图片等（资源）的404错误(其实是有onerror事件的dom)
+// promise的异常捕获
+// ajax请求错误
+
+// 错误捕获
+
+// 主动捕获(try catch / promise catch)
+// 全局捕获(onerror / addEventListener)
+
+// 内置的异常类型吧！
+
+// EvalError，调用eval()时发生的异常，已被废弃只用于向后兼容而已
+// InternalError，JavaScript引擎内部异常，FireFox独门提供的！
+// RangeError，当函数实参越界时发生，如Array，Number.toExponential,Number.toFixed和Number.toPrecision时入参非法时。
+// ReferenceError，当引用未声明的变量时发生
+// SyntaxError，解析时发生语法错误
+// TypeError，当值不是所期待的类型时，null.f()也报这个错
+// URIError，当传递一个非法的URI给全局URI处理函数时发生，如decodeURIComponent('%')，即decodeURIComponent，decodeURI,encodeURIComponent，encodeURI
+
+
+  </script>
+
+
+  <script src="aaa.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    if (localStorage.name) {
+      window.top.postMessage({
+        name: localStorage.name,
+      }, '*');
+      console.log('...login')
+    }
+    function login() {
+      localStorage.name = 'hzj';
+      window.top.postMessage({
+        name: localStorage.name,
+      }, '*');
+      console.log('...login')
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="login()">登录</button>
+  <script>
+    function message(e) {
+      // if (e.source != window.parent) return;
+
+      console.log(e.source, e.data, e.origin)
+      localStorage.data = e.data;
+    }
+    // window.parent.onmessage = message
+    // window.top.addEventListener('message', message, false);
+  </script>
+</body>
+
+</html>

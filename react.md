@@ -130,20 +130,11 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 在使用react 中经常会遇到各种个样的问题，如果对react不熟悉则会对遇到的问题感到莫名其妙而束手无策，接下来分析一下react中容易遇到的问题和注意点。
 
 1、setState()是异步的
-
-1、setState()是异步的
 this.setState()会调用render方法，但并不会立即改变state的值，state是在render方法中赋值的。所以执行this.setState()后立即获取state的值是不变的。同样的直接赋值state并不会出发更新，因为没有调用render函数。
 
 2、组件的生命周期
-
-2、组件的生命周期
 componentWillMount，componentDidMount 只有在初始化的时候才调用。
-
-2、组件的生命周期
-componentWillMount，componentDidMount 只有在初始化的时候才调用。
-componentWillReceivePorps，shouldComponentUpdate，componentWillUpdata，componentDidUpdate 只有组件在更新的时候才被调用，初始化时不调用。
-
-3、reducer必须返回一个新的对象才能出发组件的更新
+componentWillReceivePorps，shouldComponentUpdate，componentWillUpdate，componentDidUpdate 只有组件在更新的时候才被调用，初始化时不调用。
 
 3、reducer必须返回一个新的对象才能出发组件的更新
 因为在connect函数中会对新旧两个state进行浅对比，如果state只是值改变但是引用地址没有改变，connect会认为它们相同而不触发更新。
@@ -355,6 +346,11 @@ Virtal DOM
 diff算法
 
 ```
+
+React 从诞生之初就不支持双向绑定，React一直提倡的是单向数据流
+onChange/setState()
+
+在 Vue 中我们组合不同功能的方式是通过 mixin，而在React中我们通过 HoC (高阶组件）。
 
 ## React的组件化
 

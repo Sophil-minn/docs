@@ -2,7 +2,13 @@
 
 ### js 数据类型
 ```javascript
+基础数据类型：Undefined、Null、Boolean、Number、String、Symbol
+
+复杂数据类型：Object、Array、Function、Date RegExp 等
+
 0、六种弱数据类型 = 五种基本数据类型（Number,String,Boolean,Undefined,Null） + 一种复杂数据类型（Object）
+
+typeof xx 类型检测的结果: "number"| "string"|"boolean"|"undefined"| "object"|"function"
 
 1、Array对象说它是数组，其实是一个从哈希表扩展的结构体。因此它可以提供push、splice等一些列操作。这就意味着他们的效率是很低的
 2、强类型的数组，可以创建真正的数组，操作直接访问内存
@@ -22,6 +28,21 @@
 　　Float32Array
 　　Float64Array
 ```
+### 深克隆需要注意的问题
+
+1. 入参类型检查
+1. 当数据量较大并层次很深时，使用递归函数会导致栈溢出,而此处又无法使用尾递归,该怎么处理
+1. typeof Date,Math,RegExp,Function,Null 都返回Object 该怎么处理
+1. Date,RegExp,Function 应该如何克隆
+1. 当对象的两个属性v,s引用同一个对象时，克隆之后也应该引用同一个对象  !!!
+1. 对象的原型prototype 如何克隆
+1. 属性的getOwnPropertyDescriptor如何克隆
+1. for-in遍历的是原型链，需要用hasOwnProperty 判断是否是自有属性
+```
+如果只是拷贝 自身可枚举属性，就可以只用 Object.assign 方法；
+如果是要拷贝原型上的属性，就需要 Object.assign , Object.create, Object.getPrototypeOf 方法结合使用
+如果是拷贝get /set 属性，就需要 结合 Ojbect.getOwnPropertyDescriptors 方法
+```
 
 ### js 数据类型检测
 ```javascript
@@ -39,21 +60,24 @@ typeof 检测基本类型(number,string,boolean,undefined)+复杂类型(object)�
   typeof    new String  //object
   typeof    new Boolean //object
   typeof    new Array   //object
+  typeof    new Set()   //object
+  typeof    new Map()   //object
+  typeof    new Date()   //object
+  typeof    new RegExp()   //object
+
+  
 
   typeof String         //function
   typeof Number         //function
+  typeof Symbol         //function
+
+  typeof Symbol()         //symbol
+
 
 
 2、instanceof 检测 对象的 所属类，但无法输出 所属类
-
-    原理：检测左侧的__proto__原型链上，是否存在右侧的prototype原型
-
-    //假设instanceof运算符左边是L，右边是R
-    L instanceof R 
-    //instanceof运算时，通过判断L的原型链上是否存在R.prototype
-    L.__proto__.__proto__ ..... === R.prototype ？
-    //如果存在返回true 否则返回false
-
+    eg.  L instanceof R  即 L.__proto__.__proto__ ..... === R.prototype
+    原理：检测instance左侧的变量.__proto__原型链上，是否存在instance右侧的变量.prototype原型
 
     function A(){}
     var a = new A();
@@ -79,6 +103,34 @@ typeof 检测基本类型(number,string,boolean,undefined)+复杂类型(object)�
 ```
 
 ### [js 类型转化](https://www.cnblogs.com/Juphy/p/7085197.html)
+
+1+"1" == "1" + 1 == "11" // (number, boolean)与string ,视string
+
+不同类型进行运算时, toString();
+Number -> new String(Number)
+
+
+null,undefined 与另一个操作数进行运算, 类型转化规则视另一个而转为相应类型, 两个都是 null或undefined 转为 number
+null+1 //1  null->Number 0, undefined -> Number NaN
+null+"1" //"null1" null->String "null"
+null+undefined //NaN undefined->Number NaN
+null+true // 1
+
+function 与其它转运算,视 function而定转为 String后进行运算
+(function(){}) + 1 
+(function(){}) + "1"
+(function(){}) + true
+(function(){}) + {}
+
+{} + 1 // 1
+{} + "1" //1
+{} + true // 1
+
+即 function > {} > string > number > boolean > (null|undefined)
+
+-- string - number - string -number - number - ...
+
+优化级低的 总是 随着 优化级高的 类型的变化而调整变化 方向
 ```
 Boolean:
 1、所有对象转换为Bool类型都为true
@@ -184,8 +236,6 @@ Set 没有重复的值
 WeakSet 没有重复的值,但是它只能用于存储对象,没有引用的对象将被垃圾回收
 Map 有序键值对集合
 WeakMap 有序键值对集合,只不过 WeakMap 的 key 只能是非空对象
-
-
 ```
 
 
@@ -395,7 +445,7 @@ function f1(callbak){
 ### JS 继承
 
     原型属性和方法（挂在prototype中）、实例属性和方法（写在 构造函数 中）
-
+    
     1、可以多继承
     2、父类属性、方法动态共享
     3、实例即是子类实例也是父类实例
@@ -416,7 +466,7 @@ function Cat(name){
 
     1. 可以实现多继承（call多个父类对象）
     2. 创建子类实例时，可以向父类传递参数
-
+    
     1. 只能继承父类的实例属性和方法，不能继承原型属性/方法
     2. 实例并不是父类的实例，只是子类的实例  cat instanceof Animal // false
 
@@ -435,7 +485,7 @@ Cat.prototype = new Tmp();
 
     1. 父类新增原型方法/原型属性，子类都能访问到
     2. 简单，易于实现
-
+    
     1. 无法实现多继承
     2. 为子类新增原型属性和方法，必须要在`new Animal()`这样的语句之后执行
     3. 创建子类实例时，无法向父类构造函数传参
@@ -517,7 +567,7 @@ $'：匹配子字符串之前的字符串
 $&：匹配整个模式得字符串
 $$：表示$符号本身
 ```
-    
+
 - ss
 ```
 g: 全局
@@ -780,16 +830,16 @@ function(arg1, arg2, arg3) {
 ![](https://images2018.cnblogs.com/blog/1048550/201807/1048550-20180701101631549-484806327.png)
 ```
 MVC:
-model：应用程序中处理数据逻辑的一部分，通常用来模型对象对数据库的存存取等操作
-view：视图部分，通常指jsp、html等用来对用户展示的一部分
-controller：控制层通常用来处理业务逻辑，负责从试图读取数据，并向模型发送数据
+model：应用程序中处理数据逻辑的一部分，通常用来模型对象对数据库的存存取等操作. state 数据
+view：视图部分，通常指jsp、html等用来对用户展示的一部分. render
+controller：控制层通常用来处理业务逻辑，负责从试图读取数据，并向模型发送数据. react 
 ```
 ![](https://images2018.cnblogs.com/blog/1048550/201807/1048550-20180701105302049-745020808.png)
 ```
-MVVM:
-View: 可以通过事件绑定Model，
-Model: 可以通过数据绑定View，
-ViewMode: 可以实现数据和视图的完全分离,是Model和View的连接桥
+MVVM(vue):
+View: 可以通过事件绑定Model，template 视图
+Model: 可以通过数据绑定View，data 数据
+ViewMode: 可以实现数据和视图的完全分离,是Model和View的连接桥. Vue 实例
 
 mvvm的设计原理是基于mvc的，所以说mvvm不算是一种创新，充其量是一种改造，这其中的ViewModel便是一个小小的创新
 ```
@@ -807,23 +857,23 @@ mvvm的设计原理是基于mvc的，所以说mvvm不算是一种创新，充其
 
 ### JS 内存泄漏
 ```
-1.    没有清理的DOM元素引用(DOM)
+1. 没有清理的DOM元素引用(DOM)
 原因：虽然别的地方删除了，但是对象中还存在对dom的引用
 解决：手动删除。
 
-2.    子元素存在引用引起的内存泄漏(DOM)
+2. 子元素存在引用引起的内存泄漏(DOM)
 原因：div中的ul li  得到这个div，会间接引用某个得到的li，那么此时因为div间接引用li，即使li被清空，也还是在内存中，并且只要li不被删除，他的父元素都不会被删除。
 解决：手动删除清空。
 
-3.    被遗忘的定时器或者回调(JS)
+3. 被遗忘的定时器或者回调(JS)
 原因：定时器中有dom的引用，即使dom删除了，但是定时器还在，所以内存中还是有这个dom。
 解决：手动删除定时器和dom。
 
-4.    意外的全局变量引起的内存泄漏(JS)
+4. 意外的全局变量引起的内存泄漏(JS)
 原因：全局变量，不会被回收。
 解决：使用严格模式避免。
 
-5.    闭包引起的内存泄漏(JS)
+5. 闭包引起的内存泄漏(JS)
 原因：闭包可以维持函数内局部变量，使其得不到释放。
 解决：将事件处理函数定义在外部，解除闭包,或者在定义事件处理函数的外部函数中，删除对dom的引用。
 
@@ -834,7 +884,6 @@ mvvm的设计原理是基于mvc的，所以说mvvm不算是一种创新，充其
 > 2009年，nodejs 项目应用于服务端，模块化编程就随之应运而生了。
 
 - 模块化的进程
-
 ```
 1、无序（洪荒时代）：自由写代码(无函数)
 2、函数时代： 将代码关进笼子中（有函数）
@@ -845,7 +894,6 @@ mvvm的设计原理是基于mvc的，所以说mvvm不算是一种创新，充其
 ```
 
 - 模块化规范
-
 ```
 常用规范：CMD/AMD, 其它规范：Closure/ES6/CommonJS
 AMD(异步模块定义):
@@ -866,7 +914,6 @@ CommonJS:
 ```
 
 - 模块解决了哪些问题
-
 ```
 1、很多的全局变量，或全局函数
 2、多文件引入时，严格按依赖顺序放置

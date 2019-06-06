@@ -69,7 +69,17 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ```
 
 
+vue.js 是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
+组件 <--> DOM 
+1.x 
+组件 <--> DOM 
+父子组件 props间(2.x 去掉了)
 
+
+v-model是Vue用于表单元素上创建双向数据绑定，它本质是一个语法糖，在单向数据绑定的基础上，增加了监听用户输入事件并更新数据的功能。
+让 v-model 生效,它必须:
+1. 拥有一个 value 属性(从外到内) // watch 此属性,监听或接收外部变化
+2. 触发 value 改变 (从内到外)  // this.$emit('input', ...) 向外通知变化
 
 
 $route  route object

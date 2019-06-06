@@ -8,10 +8,6 @@
 - 用户及密码配置 /etc/shadow
 - 附加组及其属性信息 /etc/group
 - 
-```
-
-```
-
 
 1、脚本的创建 xxx.sh
 2、开头 #!/bin/sh  or #!/bin/bash

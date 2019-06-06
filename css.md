@@ -45,6 +45,27 @@ overflow的值不为visible
 #### Flex
 > 非常适合缩放，对齐和重新排序元素，但避免 整体页面布局，也就是只局部使用，父级：display:flex;
 
+
+- 容器属性(父属性)
+```
+flex-flow
+flex-direction
+flex-wrap   nowrap :不折行, wrap : 折行
+justify-content
+align-items
+align-content
+```
+- 元素属性(子属性)
+```
+order
+flex-grow 放大比例
+flex-shrink 缩小比例
+flex-basis
+flex
+align-self
+```
+
+
 [FLEX练习小游戏](http://flexboxfroggy.com/#zh-cn)
 [CSS3 Flexbox 演示](http://www.css88.com/demo/flexbox-playground/)
 

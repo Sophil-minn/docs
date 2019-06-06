@@ -1,6 +1,17 @@
 ### 一、BFC是什么？
 
-　　在解释 BFC 是什么之前，需要先介绍 Box、Formatting Context的概念。
+　　在解释 BFC 是什么之前，需要先介绍 Box、Formatting Context的概念。通俗一点讲, BFC 是独门独院, 别人家事影响不到你家.
+    怎么才能成家立业呢:
+
+    body 根元素 (如果你是大家长了, 不用说也是独家独院了)
+    浮动元素：float 除 none 以外的值 (如果说,你飘了,也就是说你脱离了家庭, 也可以独门独户了:如果家族要容纳他, 要家庭也要成为一个bfc)
+    绝对定位元素：position (absolute、fixed)(如果说,你断绝关系了,无论是跟父母还是大家族,你也可以在外面独门独户了)
+    display 为 inline-block、table-cells、flex(家庭内给你开一个地址cell\block, flex,让你成家)
+    overflow 除了 visible 以外的值 (hidden、auto、scroll)  - 自己在家开盖楼了, 所有空间向上发展了
+
+    解决问题(即,大家生活在一个空间内出现的问题)
+    1. 相互挤压 
+    1. 不小心占用空间
 
 #### 　　Box: CSS布局的基本单位
 

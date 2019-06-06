@@ -1,7 +1,3 @@
-知识回顾
-
-JS知识点
-
 函数表达式，函数声明，立即执行函数，变量提升，全局作用域，函数作用域，块级作用域
 
 内层变量覆盖外层变量，循环变量泄露；；
@@ -10,6 +6,20 @@ JS知识点
 
 闭包：有权访问另一函数作用域内变量的函数（1、是函数 2、此为函数内的函数，即内层函数）
 
+
+Okay，所以 箭头功能没有自己的 this 。 这意味着箭头函数无法成为构造者！
+
+const Person = (name) => {
+  // :red_circle: This wouldn’t make sense!
+  this.name = name;
+}
+
+因此，JavaScript不允许使用 new 调用箭头函数。如果你这样做，只会产生错误。这类似于JavaScript不允许在没有 new 的情况下调用类的方式。
+
+这很不错，但它也使我们在全部函数调用前添加new的计划失败。 React不可以在所有情况下调用new，因为它会破坏箭头函数！我们可以尝试通过缺少 prototype 来判断出箭头函数：
+
+(() => {}).prototype // undefined
+(function() {}).prototype // {constructor: f}
 
 
 ### 域名IP与DNS
@@ -86,9 +96,6 @@ secure: 安全标志，指定后，只有在使用SSL链接时候才能发送到
 4、SQL注入
 
 5、HTTP劫持
-
-
-
 ```
 
 
@@ -299,6 +306,26 @@ var Single = ({
 ​	}
 
 })();
+
+let instance = null;
+class Single {
+  static ins = null;
+  constructor(){
+    return this.getInstance();
+  }
+
+  _init(){
+    return this;
+  }
+
+  getInstance(){
+    if(!instance) {
+      instance = this._init();
+    }
+
+    return instance;
+  }
+}
 
 **工厂模式：**批量传参，返回对象（传入产品参数，生产产品）
 

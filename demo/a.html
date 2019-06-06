@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {}
+
+    .main {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    }
+
+    .left {
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="main">main</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+  </div>
+  <script>
+    var obj = {
+      eat: function () {
+        console.log('eat', this)
+        return (function () {
+          console.log('eat in', this)
+          return 1;
+        })()
+      },
+      test: function () {
+        console.log('test', this)
+        return () => {
+          console.log('test in', this)
+        }
+      }
+    }
+  </script>
+  <script>
+    function TPromise(cb) {
+      this._success = [];
+      this._error = [];
+      setTimeout(() => {
+        cb && cb(this.rev.bind(this), this.rej.bind(this))
+      }, 0)
+      return this;
+    }
+
+    TPromise.prototype = {
+      constructor: TPromise,
+      rev: function (val) {
+        let r = this._success.shift();
+        let ret = r && r(val)
+        if (ret instanceof TPromise) {
+          this._success.forEach(fn => {
+            ret.then(fn)
+          });
+          this._success.length = 0;
+        } else {
+          ret && this.rev(ret)
+        }
+
+      },
+      rej: function (val) {
+        let r = this._error.shift();
+        r && r(this.rev, this.rej)
+      }
+    }
+
+    TPromise.prototype.then = function (rev, reject) {
+      rev && this._success.push(rev)
+      reject && this._error.push(reject)
+      return this;
+    }
+
+    TPromise.prototype.catch = function (rev, reject) {
+      return this;
+    }
+
+    new TPromise((rev, rej) => {
+      console.log(this)
+      rev(1)
+    }).then(res => {
+      console.log(res)//1
+      return new TPromise((res) => {
+        setTimeout(() => {
+          console.log('===', 5)
+          res(5)
+        }, 3000)
+        // res(4);
+      })
+      // return 2;
+    })
+
+    // all,race
+
+    // new TPromise((rev, rej) => {
+    //   console.log(this)
+    //   rev(1)
+    // }).then(res => {
+    //   console.log(res)//1
+    //   return new TPromise((res) => {
+    //     setTimeout(() => {
+    //       res(5)
+    //     }, 3000)
+    //     // res(4);
+    //   })
+    //   // return 2;
+    // }).then(res => {
+    //   console.log(res)//1
+    //   // return new TPromise((res) => {
+    //   //   setTimeout(() => {
+    //   //     res(6)
+    //   //   }, 3000)
+    //   //   // res(4);
+    //   // })
+    //   return 8;
+    // }).then(res => {
+    //   console.log(res)//1
+    //   return new TPromise((res) => {
+    //     setTimeout(() => {
+    //       res(7)
+    //     }, 3000)
+    //     // res(4);
+    //   })
+    // }).then(res => {
+    //   console.log(res)//1
+    //   return new TPromise((res) => {
+    //     setTimeout(() => {
+    //       res(10)
+    //     }, 3000)
+    //     // res(4);
+    //   })
+    // }).catch(res => {
+    //   console.log(res)
+    //   rej(5)
+    // })
+  </script>
+  <script>
+
+    // new Promise(function (res, rej) {
+    //   res(0)
+    // }).then(a => {
+    //   console.log(a, new Date().getTime())
+    //   return new Promise((res, rej) => {
+    //     res(3)
+    //   });
+    //   // return 1;
+    // }).then(b => {
+
+    //   console.log(b, new Date().getTime())
+    //   return 2;
+    // })
+
+    // Promise.all([function () { return 1 }, new Promise((res) => { res(6) }), function () { return 2 }]).then(res => {
+    //   console.log('race1 ', res)
+    // })
+
+    // Promise.race([function () { return 1 }, new Promise((res) => { res(6) }), function () { return 2 }]).then(res => {
+    //   console.log('race1 ', res)
+    // })
+
+    // Promise.race([new Promise((res) => { res(2) }), new Promise((res) => { res(4) })]).then(res => {
+    //   console.log('race2 ', res)
+    // })
+
+    var target = {};
+
+    var r = new Proxy(target, {
+      get: (target, p, re) => {
+        if (target.hasOwnProperty(p)) {
+          return 1;
+        }
+        return p;
+      }
+    })
+  </script>
+</body>
+
+</html>
