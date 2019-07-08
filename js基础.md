@@ -8,7 +8,7 @@
 
 0、六种弱数据类型 = 五种基本数据类型（Number,String,Boolean,Undefined,Null） + 一种复杂数据类型（Object）
 
-typeof xx 类型检测的结果: "number"| "string"|"boolean"|"undefined"| "object"|"function"
+typeof xx 类型检测的结果: "number"|"string"|"boolean"|"undefined"|"object"|"function"|"symbol"
 
 1、Array对象说它是数组，其实是一个从哈希表扩展的结构体。因此它可以提供push、splice等一些列操作。这就意味着他们的效率是很低的
 2、强类型的数组，可以创建真正的数组，操作直接访问内存
@@ -47,7 +47,7 @@ typeof xx 类型检测的结果: "number"| "string"|"boolean"|"undefined"| "obje
 ### js 数据类型检测
 ```javascript
 1、typeof 通常用来 判断 变量 是否为 undefined
-typeof 检测基本类型(number,string,boolean,undefined)+复杂类型(object)：
+typeof 检测基本类型(number,string,boolean,undefined,symbol)+复杂类型('object','function')：
   typeof   123　　      //number
   typeof   'abc'　　    //string
   typeof    true       //boolean
@@ -65,8 +65,8 @@ typeof 检测基本类型(number,string,boolean,undefined)+复杂类型(object)�
   typeof    new Date()   //object
   typeof    new RegExp()   //object
 
-  
-
+  function a(){}
+  typeof a              //function
   typeof String         //function
   typeof Number         //function
   typeof Symbol         //function

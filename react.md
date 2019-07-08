@@ -399,8 +399,6 @@ diff算法不仅仅是找出节点类型的变化，它还要找出来节点的�
 有三点值得注意：1、定义类名字的首字母必须大写 2、因为class变成了关键字，类选择器需要用className来代替。 3、类和模块内部默认使用严格模式，所以不需要用use strict指定运行模式。
 
 
-
-
 ## 组件的生命周期
 
 ![](https://github.com/bailicangdu/pxq/blob/master/screenshot/react-lifecycle.png)

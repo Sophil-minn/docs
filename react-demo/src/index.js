@@ -1,21 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import dataReducer from './reducers/dataState.js'
-import App from './containers/App.js'
-import registerServiceWorker from './registerServiceWorker';
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+// HashRouter, BrowserRouter
+import './index.css';
 
-const store = createStore(dataReducer);
+import routes from './router';
+import { Provider } from './context.js'
 
-ReactDOM.render(
-	<IntlProvider locale='zh' messages={zhCN}>
-	<Provider store={store}>
-		<App/>
-	</Provider>
-	</IntlProvider>, 
-	document.getElementById('root')
-);
-registerServiceWorker();
+import * as serviceWorker from './serviceWorker';
+
+
+Object.prototype[Symbol.iterator] = function () {
+  let index = 0;
+  let propKeys = Reflect.ownKeys(this);
+  let obj = this;
+  return {
+    next() {
+      if (index < propKeys.length) {
+        let key = propKeys[index];
+        index++;
+        return { value: [key, obj[key]] };
+      } else {
+        return { done: true };
+      }
+    }
+  }
+}
+
+
+const Root = () => {
+  return (
+    <Provider>
+      <Router>
+        <Switch>
+          {routes.map(({ path, title, component }, index) => (
+            <Route
+              key={index}
+              exact
+              path={path}
+              component={component}
+            />
+          ))}
+        </Switch>
+      </Router>
+    </Provider>
+  )
+}
+
+
+ReactDOM.render(<Root />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();

@@ -1,26 +1,208 @@
-<!doctype html>
-<html>
-  <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <title>饿了么</title>
-  <link rel="shortcut icon" href="favicon.png" /> 
-  <link rel="stylesheet" href="index.css">
-  <script type="text/javascript">
-    (function(psdw){
-      var dpr=0 , rem=0 , scale=0;
-      var htmlDOM=document.documentElement;
-      dpr=window.devicePixelRatio;
-      var currentWidth=htmlDOM.clientWidth;
-      scale=currentWidth/psdw;
-      rem=psdw/10;
-      rem=rem*scale;
-      htmlDOM.style.fontSize=rem+'px';
-      htmlDOM.setAttribute('data-dpr',dpr)
-    })(750)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <meta http-equiv="Cache-control" content="no-store">
+  <title></title>
+  <script>
+    //designWidth:设计稿的实际宽度值，需要根据实际设置
+    //maxWidth:制作稿的最大宽度值，需要根据实际设置
+    //这段js的最后面有两个参数记得要设置，一个为设计稿实际宽度，一个为制作稿最大宽度，例如设计稿为750，最大宽度为750，则为(750,750)
+    ; (function (designWidth, maxWidth) {
+      var doc = document,
+        win = window,
+        docEl = doc.documentElement,
+        remStyle = document.createElement("style"),
+        tid;
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        maxWidth = maxWidth || 540;
+        width > maxWidth && (width = maxWidth);
+        var rem = width * 100 / designWidth;
+        remStyle.innerHTML = 'html{font-size:' + rem + 'px;}';
+      }
+
+      if (docEl.firstElementChild) {
+        docEl.firstElementChild.appendChild(remStyle);
+      } else {
+        var wrap = doc.createElement("div");
+        wrap.appendChild(remStyle);
+        doc.write(wrap.innerHTML);
+        wrap = null;
+      }
+      //要等 wiewport 设置好后才能执行 refreshRem，不然 refreshRem 会执行2次；
+      refreshRem();
+
+      win.addEventListener("resize", function () {
+        clearTimeout(tid); //防止执行两次
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+
+      win.addEventListener("pageshow", function (e) {
+        if (e.persisted) { // 浏览器后退的时候重新计算
+          clearTimeout(tid);
+          tid = setTimeout(refreshRem, 300);
+        }
+      }, false);
+
+      if (doc.readyState === "complete") {
+        doc.body.style.fontSize = "16px";
+      } else {
+        doc.addEventListener("DOMContentLoaded", function (e) {
+          doc.body.style.fontSize = "16px";
+        }, false);
+      }
+    })(375, 750);
   </script>
+  <style>
+    .loader {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+      width: 175px;
+      height: 100px;
+    }
+
+    .loader span {
+      display: block;
+      background: #ccc;
+      width: 7px;
+      height: 10%;
+      border-radius: 14px;
+      margin-right: 5px;
+      float: left;
+      margin-top: 25%;
+    }
+
+    .loader span:last-child {
+      margin-right: 0px;
+    }
+
+    .loader span:nth-child(1) {
+      animation: load 2.5s 1.4s infinite linear;
+    }
+
+    .loader span:nth-child(2) {
+      animation: load 2.5s 1.2s infinite linear;
+    }
+
+    .loader span:nth-child(3) {
+      animation: load 2.5s 1s infinite linear;
+    }
+
+    .loader span:nth-child(4) {
+      animation: load 2.5s 0.8s infinite linear;
+    }
+
+    .loader span:nth-child(5) {
+      animation: load 2.5s 0.6s infinite linear;
+    }
+
+    .loader span:nth-child(6) {
+      animation: load 2.5s 0.4s infinite linear;
+    }
+
+    .loader span:nth-child(7) {
+      animation: load 2.5s 0.2s infinite linear;
+    }
+
+    .loader span:nth-child(8) {
+      animation: load 2.5s 0s infinite linear;
+    }
+
+    .loader span:nth-child(9) {
+      animation: load 2.5s 0.2s infinite linear;
+    }
+
+    .loader span:nth-child(10) {
+      animation: load 2.5s 0.4s infinite linear;
+    }
+
+    .loader span:nth-child(11) {
+      animation: load 2.5s 0.6s infinite linear;
+    }
+
+    .loader span:nth-child(12) {
+      animation: load 2.5s 0.8s infinite linear;
+    }
+
+    .loader span:nth-child(13) {
+      animation: load 2.5s 1s infinite linear;
+    }
+
+    .loader span:nth-child(14) {
+      animation: load 2.5s 1.2s infinite linear;
+    }
+
+    .loader span:nth-child(15) {
+      animation: load 2.5s 1.4s infinite linear;
+    }
+
+    @keyframes load {
+      0% {
+        background: #ccc;
+        margin-top: 25%;
+        height: 10%;
+      }
+
+      50% {
+        background: #444;
+        height: 100%;
+        margin-top: 0%;
+      }
+
+      100% {
+        background: #ccc;
+        height: 10%;
+        margin-top: 25%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <div id="root"></div>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
 </body>
+
 </html>

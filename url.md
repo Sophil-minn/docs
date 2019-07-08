@@ -1,8 +1,7 @@
-protocol
-
 
 ### btoa & atob
-atob() 函数能够解码通过base-64编码的字符串数据。相反地,btoa() 函数能够从二进制数据“字符串”创建一个base-64编码的ASCII字符串
+atob() 函数能够解码通过base-64编码的字符串数据。
+btoa() 函数能够从二进制数据“字符串”创建一个base-64编码的ASCII字符串
 ```
 中文编码一直都是程序员要关注的，window.btoa('哎哟不错')，是会抛出异常的。
 
@@ -33,8 +32,7 @@ b64_to_utf8('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
 - data:
 - Blob || BlobBuilder:
 
-```
-- Blob or BlobBuilder
+```js
 try {
     blob = new Blob([response], {type: 'application/javascript'});
 } catch (e) { // Backwards-compatibility
@@ -46,8 +44,7 @@ try {
 ```
 
 
-```
-
+```js
 var blob = new Blob(["Hello, world!"], { type: 'text/plain' });
 var blobUrl = URL.createObjectURL(blob); // create a v address.
 var xhr = new XMLHttpRequest;
@@ -67,7 +64,7 @@ xhr.send();
 
 ### Not allowed to navigate top frame to data URL, you can navigate iframe to data URL
 
-```
+```js
 var pdf = "data:application/pdf;base64," + data;
 window.open(pdf);
 在Chrome使用window.open()打开pdf报错：
@@ -104,27 +101,39 @@ let ifa = '<iframe src="' + 'data:application/pdf;base64, sdfsdf' + '" framebord
 
 ### blob转base64位 和 base64位转blob
 **dataURL to blob**
-```
+```js
 function dataURLtoBlob(dataurl) {
-var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-while (n--) {
-u8arr[n] = bstr.charCodeAt(n);
-}
-return new Blob([u8arr], { type: mime });
+    var arr = dataurl.split(','), 
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, 
+        u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
 }
 
+```
 **blob to dataURL**
-
+```js
 function blobToDataURL(blob, callback) {
-var a = new FileReader();
-a.onload = function (e) { callback(e.target.result); }
-a.readAsDataURL(blob);
+    var a = new FileReader();
+    a.onload = function (e) { callback(e.target.result); }
+    a.readAsDataURL(blob);
 }
 
 //test:
-//var blob = dataURLtoBlob('data:text/plain;base64,YWFhYWFhYQ==');
-//blobToDataURL(blob, function (dataurl) {
-// console.log(dataurl);
-//});
+var blob = dataURLtoBlob('data:text/plain;base64,YWFhYWFhYQ==');
+blobToDataURL(blob, function (dataurl) {
+    console.log(dataurl);
+});
+```
+
+### buffer 转base64
+```js
+var fs = require("fs");
+
+var imageBuf = fs.readFileSync("D:\\Documents\\logo3.gif");
+
+console.log(imageBuf.toString("base64"));
 ```
