@@ -731,8 +731,12 @@ shouldComponentUpdate(nextProps, nextState) {
 因为页面 HTML由服务器端返回的脚本生成，一般来说这种脚本的体积都不会太小，客户端下载需要时间，浏览器解析以生成页面元素也需要时间，这必然会导致页面的显示速度比传统服务器端渲染得要慢，很容易出现首页白屏的情况，甚至如果浏览器禁用了 JS，那么将直接导致页面连基本的元素都看不到。
 ```
 
-#### 高阶函数 ref
+#### 高阶函数 ref 进阶
+- ref: string
+- ref: (ins)=>this.xxx=ins
+- ref: React.createRef()
 ```
+
 function logProps(Component) {
   class LogProps extends React.Component {
     render() {

@@ -38,6 +38,21 @@ Object.defineProperty(to, prop, Object.getOwnPropertyDescriptor(from, prop));
  console.log（Reflect.ownKeys（testObject））; 
 
 
+### eval , new Function, 
+```
+性能比较的结论：
+
+1、在IE6、IE7中选择 eval
+
+2、在IE8中选择 native JSON
+
+3、在Firefox2，3 中选择 new Function
+
+4、在 Safri4中选择 eval
+
+5、当选择其它浏览器时，eval 和 new Function 的性能一致。
+```
+
 ### js中匿名函数 的 全局性
 ```
 var obj = {

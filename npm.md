@@ -27,6 +27,15 @@ $ npm set init-license 'MIT'
 
 npm info
 
+### 原来镜像
+```
+npm config set registryhttps://registry.npmjs.org
+```
+
+### cnpm
+```bash
+npm install cnpm -g --registry=https://r.npm.taobao.org
+```
 
 #### npm 默认提供下面这些钩子。
 
@@ -129,4 +138,8 @@ npm i git+https://username:password@git.example.com/path/reposity#1.0.0
 　　　 大致意思是，如果改了package.json，且package.json和lock文件不同，那么执行`npm i`时npm会根据package中的版本号以及语义含义去下载最新的包，并更新至lock。
 
 　　如果两者是同一状态，那么执行`npm i `都会根据lock下载，不会理会package实际包的版本是否有新。
+
+
+
+### [Resolving EACCES permissions errors when installing packages globally](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
 
