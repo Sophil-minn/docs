@@ -37,6 +37,16 @@ npm config set registryhttps://registry.npmjs.org
 npm install cnpm -g --registry=https://r.npm.taobao.org
 ```
 
+### 镜像管理
+> 后台如果有很多时候 需要处理很多的镜像, 比如我们使用 taobao , npmjs , 自己公司私服 等
+```
+npm i -g nrm
+nrm add xxx url
+nrm use xxx
+nrm ls
+```
+
+
 #### npm 默认提供下面这些钩子。
 
 prepublish，postpublish
@@ -47,6 +57,13 @@ pretest，posttest
 prestop，poststop
 prestart，poststart
 prerestart，postrestart
+
+
+### npm link 本地调试 - 最优文案
+1. npm install .../modle 安装本地开发模块, 缺点是 更新时要重新 npm install
+1. npm publish 发布, 缺点是 麻烦
+1. npm link 只要两步, 一步是 npm link (如果在开发模板中), 一步是 npm link modelxxx (在项目中) - 之前以为只有一步, 把开发中的模块 npm link 到全局, 但在项目中还是找不到, 原因是没有执行第二步, npm link modelxxx
+或者, 直接要项目中 npm link .../model/ 即可一步完
 
 #### npm 版本管理
 
