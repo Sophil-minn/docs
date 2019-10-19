@@ -13,6 +13,76 @@
  echo $PATH
 ```
 
+### upgrade (flutter 包的更新)
+> flutter upgrade 或者是 重新操作上面部分
+
+### update (flutter 项目依赖包更新)
+> flutter pub get
+
+### issue
+1. 
+```
+使用androidx时Program type already present报错的一种解决尝试
+0.29
+2018.07.30 12:48:43
+字数 96
+阅读 15695
+如果在使用androidx库时, 又不小心间接使用了其他的老库, 可能会遇到如下的报错:
+
+Program type already present: android.support.v4.os.ResultReceiver
+Error: Program type already present: android.support.v4.app.INotificationSideChannel
+Error: Program type already present: xxxxxxxx(此处可能会有各种变形)
+
+解决方法:
+可以尝试在gradle.properties中添加:
+
+android.useAndroidX=true
+android.enableJetifier=true
+在我这好使, 可以试试.
+```
+1. Android ERR_CLEARTEXT_NOT_PERMITTED
+```
+今天突然产品就过来这我说我们平台无法打开对方的h5了，立马就拿出手机来测试发现没有问题,
+然后去google文档中查找才发现Android9.0对未加密的流量不在信任，添加了新的限制。
+
+这个确实坑的不行。。。。。
+
+解决方案：
+在Android 的mainfest.xml中的application添加一句配置
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ...>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        ...
+        android:usesCleartextTraffic="true"
+        ...>
+        ...
+    </application>
+</manifest>
+```
+1. webview 中 net:err_unknown_url_scheme
+```
+WebView在应用中还是很常见的，比如我们的注册协议、常见问题等
+
+但是实际开发中总是会遇到一些问题，net:err_unknown_url_scheme
+
+1、解决方法：以"http","https"开头的url在本页用webview进行加载，其他链接进行跳转
+
+2、解决方法：以微信、支付宝、拨号 三种跳转方式，其他类型等进行分类
+
+这还涉及到一个问题, flutter 中如何发起 像xxx: 这样的自定义的协议
+```
+
+### install app 时内存不足
+> adb shell
+> su root
+> rm -rf /data/app/com.xxx.xx
+
+### install 缓存...
+```
+删除 build
+```
 
 ### install
 - Anroid 下载
@@ -151,6 +221,10 @@ buildTypes {
 
 ### [Flutter 布局控件完结篇](https://www.cnblogs.com/holy-loki/p/9735071.html)
 ### [Flutter 布局控件完结篇](https://github.com/bitores/flutter-study)
+
+### [Flutter超全开源框架、项目和学习资料汇总
+](https://www.jianshu.com/p/f8d054378b78)
+
 
 - 参数类型
 - 默认参数
