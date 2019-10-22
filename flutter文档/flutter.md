@@ -74,6 +74,45 @@ WebView在应用中还是很常见的，比如我们的注册协议、常见问�
 这还涉及到一个问题, flutter 中如何发起 像xxx: 这样的自定义的协议
 ```
 
+1. Flutter报错：setState() called after dispose()
+```
+// If the widget was removed from the tree while the message was in flight,
+// we want to discard the reply rather than calling setState to update our
+// non-existent appearance.
+if (!mounted) return;
+setState((){})
+```
+
+1. Flutter 中的异步操作
+```
+@override
+  void initState() {
+    super.initState();
+
+    _load();
+  }
+
+  _load() {
+    Future.wait([_getA(), _getB()]).then((list) {
+      print(list);
+    }).whenComplete(() {
+      print("全部完成");
+    });
+  }
+
+  Future<String> _getA() async {
+    await Future.delayed(Duration(seconds: 4));
+    print("a完成");
+    return "a";
+  }
+
+  Future<String> _getB() async {
+    await Future.delayed(Duration(seconds: 2));
+    print("b完成");
+    return "b";
+  }
+```
+
 ### install app 时内存不足
 > adb shell
 > su root
