@@ -113,7 +113,7 @@ setState((){})
   }
 ```
 
-### install app 时内存不足
+### install app 时内存不足 INSTALL_FAILED_INSUFFICIENT_STORAGE
 > adb shell
 > su root
 > rm -rf /data/app/com.xxx.xx
@@ -121,7 +121,37 @@ setState((){})
 ### install 缓存...
 ```
 删除 build
+or
+flutter clean
 ```
+
+
+### All the AndroidX versions different from the compile
+```
+configurations.all {
+  resolutionStrategy {
+    resolutionStrategy.eachDependency { details ->
+      if (details.requested.group == 'androidx.core') {
+          details.useVersion "1.0.1"
+      }
+      if (details.requested.group == 'androidx.lifecycle') {
+          details.useVersion "2.0.0"
+      }
+      if (details.requested.group == 'androidx.versionedparcelable') {
+          details.useVersion "1.0.0"
+      }
+      if (details.requested.group == 'androidx.fragment') {
+          details.useVersion "1.0.0"
+      }
+      if (details.requested.group == 'androidx.appcompat') {
+          details.useVersion "1.0.1"
+      }
+    }
+  }
+}
+```
+
+
 
 ### install
 - Anroid 下载
@@ -239,6 +269,17 @@ buildTypes {
     }
 }
 ```
+
+
+#### [Flutter下载更新 App](https://juejin.im/post/5d2d919e5188253f5154cbbe)
+```
+在android 只能强制更新apk或者跳转到谷歌stop去下载。
+在ios，只能提醒去 App Store 官网下载。
+```
+1. iOS 和Android 更新是完全不一样的。
+1. iOS 只能跳转到 App Store 官网下载。
+1. Android则需要下载apk包，由于Android机型较多，这里我们用 dart 连接[第三方](https://github.com/jenly1314/AppUpdater)的原生 Android 下载库。更新界面和下载更新分开处理的。
+1. iOS 没得下载进度这一说，Android 则有。
 
 
 ## ipa 打包

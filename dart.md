@@ -14,11 +14,17 @@
 - 非 bool 类型的对象都被当作 false， 如 1 生产模式下则认为是 false
 - num = int + double
 - 私有变量 下划线 _
-```
+```dart
 var：变量
 dynamic：不指定类型
-final：常量
-const：编译时常量
+final：常量,只能赋值一次,且在声明时就需要初始化
+const：编译时常量, 隐式的final, 也只能赋值一次, 
+final|const 修饰的常量, 类型可以省略, 但建议指定类型
+final|const 不能同时与 var 一起用, 如 final var xx ;是不对的
+实例变量可以为 final 但是不能是 const 。
+[] 创建的是一个空的list集合
+const []创建一个空的、不可变的列表（EIL）: var sslist = const[];
+null: 没有初始化的变量都会被赋予null, 函数没有指定返回值时默认返回 null
 ```
 
 
@@ -28,12 +34,17 @@ const：编译时常量
 - is、is! 类型判断
 - as  类型转换,person as Person
 - []
-- ??、?. 、?:
-- ..
+- .. 级联符号, 相当于返回this操作
 - if...else if...else、switch...case...break、for、while、try...catch...finally
-
-- ??= 运算符 前面的变量为null，则赋值，否则不赋值 e.g. param1 ??= "world";
+- """ 三个单引号 为多行字符串
+- ??、?. 、?:
+- ??= 运算符 前面的变量为null，则赋值，否则不赋值 e.g. param1 ??= "world"; (简言之, 给值为 null 的变量赋值)
 - ?. 运算符 前面的变量为null，则赋值，否则不赋值 e.g. str1?.length;
+```dart
+expr1 ?? expr2
+如果 expr1 是 non-null，返回其值； 否则执行 expr2 并返回其结果。
+```
+- 箭头表达式: 在只有一个表达式时才可以使用, 这点不同于 js 中的箭头表达式
 
 ### [基础类型与正则](https://blog.csdn.net/hekaiyou/article/details/51310381)
 ```

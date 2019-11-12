@@ -61,3 +61,11 @@ git remote -v 查看库关联的远程地址
 git remote remove origin 删除关联的远程地址
 git remote add origin ssh://xxx.git 添加关联的远程地址
 ```
+
+### 将某个目录作为git 项目上传
+```
+1. 删除项目中 .git 目录
+2. git init 生成新的 .git 目录
+3. git remote add origin ssh://xxx:x/...yy.git 映射到指定远程 git 仓库
+4. git push -u origin master  将此作为master 分支上传
+```
